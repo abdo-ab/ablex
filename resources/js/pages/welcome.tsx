@@ -1,8 +1,14 @@
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
+import {
+    BellPlus,
+    LockKeyhole,
+    MailOpenIcon,
+    MapPinIcon,
+    PhoneCall,
+} from 'lucide-react';
 import { useState } from 'react';
 import { route } from 'ziggy-js';
-// import { login, register } from '../routes';
 
 export default function Welcome() {
     const { auth } = usePage<SharedData>().props;
@@ -88,8 +94,9 @@ export default function Welcome() {
                     </div>
 
                     <div
-                        className={`${isMenuOpen ? 'block' : 'hidden'
-                            } w-full items-center justify-between lg:order-1 lg:flex lg:w-auto`}
+                        className={`${
+                            isMenuOpen ? 'block' : 'hidden'
+                        } w-full items-center justify-between lg:order-1 lg:flex lg:w-auto`}
                     >
                         <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
                             <li>
@@ -158,11 +165,13 @@ export default function Welcome() {
             </nav>
 
             {/* Hero Section */}
-            <section className="relative isolate overflow-hidden bg-gradient-to-b from-indigo-600 via-indigo-500 to-indigo-400 pt-24 pb-16 sm:pb-20">
+            <section className="relative isolate overflow-hidden bg-slate-900 pt-24 pb-16 sm:pb-20">
                 <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
                     <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl">
                         Level Up Your Learning with{' '}
-                        <span className="text-yellow-300">Ablex</span>
+                        <span className="text-indigo-600 dark:text-indigo-400">
+                            Ablex
+                        </span>
                     </h1>
                     <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-indigo-100">
                         Get smarter every day with real-time updates, fresh
@@ -183,20 +192,19 @@ export default function Welcome() {
                         </Link>
                     </div>
                 </div>
-                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white dark:from-gray-900" />
             </section>
 
             {/* Features Section */}
             <section
                 id="features"
-                className="relative bg-white py-16 dark:bg-gray-900"
+                className="relative bg-slate-900 py-16 dark:bg-gray-900"
             >
                 <div className="mx-auto max-w-screen-xl px-6 lg:px-8">
                     <div className="mb-10 text-center">
-                        <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
+                        <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-[#a2b0ab] sm:text-5xl dark:text-white">
                             Smarter Learning. Real-Time Updates.
                         </h2>
-                        <p className="mx-auto max-w-2xl text-lg text-gray-600 sm:text-xl dark:text-gray-400">
+                        <p className="mx-auto max-w-2xl text-lg text-[#a2b0ab] sm:text-xl dark:text-gray-400">
                             Get the latest course materials, books, and articles
                             — automatically updated and personalized just for
                             you.
@@ -208,13 +216,7 @@ export default function Welcome() {
                             {
                                 title: 'Always Up-to-Date Content',
                                 desc: 'Fresh materials the moment they’re released — from new books to trending topics.',
-                                icon: (
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M4 3a1 1 0 000 2h12a1 1 0 100-2H4zM4 7a1 1 0 000 2h8a1 1 0 100-2H4zM4 11a1 1 0 000 2h6a1 1 0 100-2H4z"
-                                        clipRule="evenodd"
-                                    />
-                                ),
+                                icon: <BellPlus />,
                             },
                             {
                                 title: 'Learn Anytime',
@@ -226,20 +228,14 @@ export default function Welcome() {
                             {
                                 title: 'Your Data is Safe',
                                 desc: 'We use secure, encrypted systems to keep your learning data protected.',
-                                icon: (
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm2-11a1 1 0 00-1.707-.707L9 7.586 7.707 6.293A1 1 0 006 7.707L7.293 9 6 10.293A1 1 0 107.707 12L9 10.707 10.293 12A1 1 0 1012 10.293L10.707 9 12 7.707A1 1 0 0012 7z"
-                                        clipRule="evenodd"
-                                    />
-                                ),
+                                icon: <LockKeyhole />,
                             },
                         ].map((feature, index) => (
                             <div
                                 key={index}
-                                className="group rounded-2xl border border-gray-100 bg-gradient-to-b from-white to-gray-50 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
+                                className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
                             >
-                                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-500 to-indigo-500 text-white transition-transform duration-300 group-hover:scale-110">
+                                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-slate-500 text-[#a2b0ab] transition-transform duration-300 group-hover:scale-110">
                                     <svg
                                         className="h-6 w-6"
                                         fill="currentColor"
@@ -248,10 +244,10 @@ export default function Welcome() {
                                         {feature.icon}
                                     </svg>
                                 </div>
-                                <h3 className="mb-3 text-2xl font-semibold text-gray-900 dark:text-white">
+                                <h3 className="mb-3 text-2xl font-semibold text-[#a2b0ab] dark:text-white">
                                     {feature.title}
                                 </h3>
-                                <p className="text-gray-600 dark:text-gray-400">
+                                <p className="text-[#a2b0ab] dark:text-gray-400">
                                     {feature.desc}
                                 </p>
                             </div>
@@ -262,13 +258,13 @@ export default function Welcome() {
             {/* About Us Section */}
             <section
                 id="about"
-                className="relative bg-gray-50 p-5 py-16 dark:bg-gray-900"
+                className="relative bg-slate-900 p-5 py-16 dark:bg-gray-900"
             >
                 <div className="mx-auto max-w-screen-xl px-6 text-center lg:px-8">
-                    <h2 className="mb-6 text-4xl font-extrabold text-gray-900 sm:text-5xl dark:text-white">
+                    <h2 className="mb-6 text-4xl font-extrabold text-[#a2b0ab] sm:text-5xl dark:text-white">
                         Who We Are
                     </h2>
-                    <p className="mx-auto mb-6 max-w-3xl text-lg text-gray-600 dark:text-gray-400">
+                    <p className="mx-auto mb-6 max-w-3xl text-lg text-[#a2b0ab] dark:text-gray-400">
                         We’re a passionate team of educators, developers, and
                         lifelong learners building a smarter way to grow your
                         skills. At{' '}
@@ -309,17 +305,17 @@ export default function Welcome() {
                         ].map((member, index) => (
                             <div
                                 key={index}
-                                className="rounded-2xl bg-white p-6 shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl dark:bg-gray-800"
+                                className="group rounded-2xl border border-gray-100 bg-slate-800 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
                             >
                                 <img
                                     src={member.img}
                                     alt={member.alt}
                                     className="mx-auto mb-4 h-24 w-24 rounded-full object-cover"
                                 />
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                <h3 className="text-xl font-semibold text-[#a2b0ab] dark:text-white">
                                     {member.name}
                                 </h3>
-                                <p className="text-indigo-600 dark:text-indigo-400">
+                                <p className="text-[#a2b0ab] dark:text-indigo-400">
                                     {member.role}
                                 </p>
                             </div>
@@ -330,97 +326,53 @@ export default function Welcome() {
             {/* Contact Section */}
             <section
                 id="contact"
-                className="relative bg-gray-50 py-16 dark:bg-gray-900"
+                className="relative bg-slate-900 py-16 dark:bg-gray-900"
             >
                 <div className="mx-auto max-w-screen-xl px-6 text-center lg:px-8">
-                    <h2 className="text-4xl font-extrabold text-gray-900 sm:text-5xl dark:text-white">
+                    <h2 className="text-4xl font-extrabold text-[#a2b0ab] sm:text-5xl dark:text-white">
                         Let's Connect
                     </h2>
-                    <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+                    <p className="mx-auto mt-4 max-w-2xl text-lg text-[#a2b0ab] dark:text-gray-400">
                         Got questions or ideas? We’re here to collaborate. Reach
                         out and let’s make something amazing together.
                     </p>
 
                     <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {/* Phone */}
-                        <div className="rounded-2xl bg-white p-8 shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl dark:bg-gray-800">
-                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 to-blue-500 text-white">
-                                <svg
-                                    className="h-6 w-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M3 5h2l2 5-2 2 5 5 2-2 5 2 5-5-2-2 2-2h2"
-                                    />
-                                </svg>
+                        <div className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900">
+                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-700 text-[#a2b0ab]">
+                                <PhoneCall />
                             </div>
-                            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                            <h3 className="mb-2 text-xl font-semibold text-[#a2b0ab] dark:text-white">
                                 Call Support
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400">
+                            <p className="text-[#a2b0ab] dark:text-gray-400">
                                 +251 937 848 785
                             </p>
                         </div>
 
                         {/* Email / Collaboration */}
-                        <div className="rounded-2xl bg-white p-8 shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl dark:bg-gray-800">
-                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-tr from-purple-500 to-pink-500 text-white">
-                                <svg
-                                    className="h-6 w-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M16 12H8m0 0l-4 4m4-4l4-4m6 8h.01"
-                                    />
-                                </svg>
+                        <div className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900">
+                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-700 text-[#a2b0ab]">
+                                <MailOpenIcon />
                             </div>
-                            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                            <h3 className="mb-2 text-xl font-semibold text-[#a2b0ab] dark:text-white">
                                 Email / Collaboration
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400">
+                            <p className="text-[#a2b0ab] dark:text-gray-400">
                                 teams@ablex.com
                             </p>
                         </div>
 
                         {/* Location */}
-                        <div className="rounded-2xl bg-white p-8 shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl dark:bg-gray-800">
-                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-tr from-green-500 to-teal-500 text-white">
-                                <svg
-                                    className="h-6 w-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5s-3 1.343-3 3 1.343 3 3 3z"
-                                    />
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 21c-4-4-8-8-8-12 0-4 4-8 8-8s8 4 8 8c0 4-4 8-8 12z"
-                                    />
-                                </svg>
+                        <div className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900">
+                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-700 text-[#a2b0ab]">
+                                <MapPinIcon />
                             </div>
-                            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                            <h3 className="mb-2 text-xl font-semibold text-[#a2b0ab] dark:text-white">
                                 Location
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400">
+                            <p className="text-[#a2b0ab] dark:text-gray-400">
                                 Ablex , semara University
                             </p>
                         </div>
