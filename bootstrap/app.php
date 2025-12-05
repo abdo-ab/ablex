@@ -20,7 +20,11 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+
         ]);
+         $middleware->alias([
+                'admin' => app\Http\Middleware\ProtectFilamentAdmin::class
+            ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
