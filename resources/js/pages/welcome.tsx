@@ -1,12 +1,7 @@
+// import { cn } from '@/lib/utils';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import {
-    BellPlus,
-    LockKeyhole,
-    MailOpenIcon,
-    MapPinIcon,
-    PhoneCall,
-} from 'lucide-react';
+import { BellPlus, LockKeyhole } from 'lucide-react';
 import { useState } from 'react';
 import { route } from 'ziggy-js';
 
@@ -127,11 +122,11 @@ export default function Welcome() {
                             </li>
                             <li>
                                 <a
-                                    href="#about"
+                                    href="#teams"
                                     onClick={(e) => {
                                         e.preventDefault();
                                         document
-                                            .querySelector('#about')
+                                            .querySelector('#teams')
                                             ?.scrollIntoView({
                                                 behavior: 'smooth',
                                             });
@@ -139,24 +134,7 @@ export default function Welcome() {
                                     }}
                                     className="text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-white"
                                 >
-                                    Who We Are
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#contact"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        document
-                                            .querySelector('#contact')
-                                            ?.scrollIntoView({
-                                                behavior: 'smooth',
-                                            });
-                                        setIsMenuOpen(false);
-                                    }}
-                                    className="text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-white"
-                                >
-                                    Contact
+                                    Teams
                                 </a>
                             </li>
                         </ul>
@@ -165,15 +143,27 @@ export default function Welcome() {
             </nav>
 
             {/* Hero Section */}
-            <section className="relative isolate overflow-hidden bg-slate-900 pt-24 pb-16 sm:pb-20">
+            <section className="w-full items-center justify-center overflow-hidden bg-[#101828] pt-24 pb-16 sm:pb-20">
+                {/* mine bg start */}
+                {/* <div
+                    className={cn(
+                        'absolute inset-0',
+                        '[background-size:40px_40px]',
+                        '[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]',
+                        'dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]',
+                    )}
+                /> */}
+                {/* <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div> */}
+
+                {/* end*/}
                 <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-                    <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl">
+                    <h1 className="text-5xl font-extrabold tracking-tight text-white/50 sm:text-6xl">
                         Level Up Your Learning with{' '}
                         <span className="text-indigo-600 dark:text-indigo-400">
                             Ablex
                         </span>
                     </h1>
-                    <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-indigo-100">
+                    <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/50">
                         Get smarter every day with real-time updates, fresh
                         materials, and hands-on lessons built just for you.
                     </p>
@@ -195,22 +185,17 @@ export default function Welcome() {
             </section>
 
             {/* Features Section */}
-            <section
-                id="features"
-                className="relative bg-slate-900 py-16 dark:bg-gray-900"
-            >
-                <div className="mx-auto max-w-screen-xl px-6 lg:px-8">
-                    <div className="mb-10 text-center">
-                        <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-[#a2b0ab] sm:text-5xl dark:text-white">
-                            Smarter Learning. Real-Time Updates.
-                        </h2>
-                        <p className="mx-auto max-w-2xl text-lg text-[#a2b0ab] sm:text-xl dark:text-gray-400">
-                            Get the latest course materials, books, and articles
-                            — automatically updated and personalized just for
-                            you.
-                        </p>
-                    </div>
-
+            <section id="features" className="bg-[#101828] text-white/50">
+                <div className="group flex transform cursor-pointer flex-col items-center p-8 transition-colors duration-300">
+                    <h1 className="text-center text-2xl font-semibold text-gray-200 capitalize lg:text-3xl">
+                        What make us Unique
+                    </h1>
+                    <p className="mx-auto my-6 max-w-2xl text-center text-gray-400">
+                        Our platform gives you a constantly evolving learning
+                        space. New content appears the moment it’s released,
+                        your lessons sync across all your devices, and You get
+                        freedom, flexibility, and peace of mind while you learn.
+                    </p>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {[
                             {
@@ -233,9 +218,9 @@ export default function Welcome() {
                         ].map((feature, index) => (
                             <div
                                 key={index}
-                                className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
+                                className="group rounded-2xl border p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-gray-500 hover:shadow-2xl dark:border-gray-700 dark:hover:border-transparent"
                             >
-                                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-slate-500 text-[#a2b0ab] transition-transform duration-300 group-hover:scale-110">
+                                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-cyan-900 text-white transition-transform duration-300 group-hover:scale-110">
                                     <svg
                                         className="h-6 w-6"
                                         fill="currentColor"
@@ -244,27 +229,23 @@ export default function Welcome() {
                                         {feature.icon}
                                     </svg>
                                 </div>
-                                <h3 className="mb-3 text-2xl font-semibold text-[#a2b0ab] dark:text-white">
+                                <h3 className="mb-3 text-2xl font-semibold text-white/50">
                                     {feature.title}
                                 </h3>
-                                <p className="text-[#a2b0ab] dark:text-gray-400">
-                                    {feature.desc}
-                                </p>
+                                <p className="text-gray-300">{feature.desc}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
             {/* About Us Section */}
-            <section
-                id="about"
-                className="relative bg-slate-900 p-5 py-16 dark:bg-gray-900"
-            >
-                <div className="mx-auto max-w-screen-xl px-6 text-center lg:px-8">
-                    <h2 className="mb-6 text-4xl font-extrabold text-[#a2b0ab] sm:text-5xl dark:text-white">
-                        Who We Are
-                    </h2>
-                    <p className="mx-auto mb-6 max-w-3xl text-lg text-[#a2b0ab] dark:text-gray-400">
+            <section id="teams" className="bg-[#101828]">
+                <div className="container mx-auto px-6 py-10">
+                    <h1 className="text-center text-2xl font-semibold text-gray-200 capitalize lg:text-3xl">
+                        Know Who we are
+                    </h1>
+
+                    <p className="mx-auto my-6 max-w-2xl text-center text-gray-400">
                         We’re a passionate team of educators, developers, and
                         lifelong learners building a smarter way to grow your
                         skills. At{' '}
@@ -276,60 +257,77 @@ export default function Welcome() {
                         time.
                     </p>
 
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-                        {[
-                            {
-                                name: 'Kamil Moh',
-                                role: 'Content Strategist',
-                                img: '/images/kam.jpg',
-                                alt: 'kamil mohammed Content stategist',
-                            },
-                            {
-                                name: 'Mohammed hussen',
-                                role: 'Lead Developer',
-                                img: '/images/mame.jpg',
-                                alt: 'Mohammed hussen Leader of developers',
-                            },
-                            {
-                                name: 'Fikadu Temesgen',
-                                role: 'Education Researcher',
-                                img: '/images/lecturer.jpg',
-                                alt: 'Fikadu temesgen Educational Researcher',
-                            },
-                            {
-                                name: 'DEV AB',
-                                role: 'Co-founder and CEO',
-                                img: '/images/ab.jpg',
-                                alt: 'Abdo mohammed Co-founder of Ablex',
-                            },
-                        ].map((member, index) => (
-                            <div
-                                key={index}
-                                className="group rounded-2xl border border-gray-100 bg-slate-800 p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900"
-                            >
-                                <img
-                                    src={member.img}
-                                    alt={member.alt}
-                                    className="mx-auto mb-4 h-24 w-24 rounded-full object-cover"
-                                />
-                                <h3 className="text-xl font-semibold text-[#a2b0ab] dark:text-white">
-                                    {member.name}
-                                </h3>
-                                <p className="text-[#a2b0ab] dark:text-indigo-400">
-                                    {member.role}
-                                </p>
-                            </div>
-                        ))}
+                    <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 xl:mt-16 xl:grid-cols-4">
+                        <div className="group flex transform cursor-pointer flex-col items-center rounded-xl border p-8 transition-colors duration-300 hover:border-transparent hover:bg-blue-600 dark:border-gray-700 dark:hover:border-transparent">
+                            <img
+                                className="h-32 w-32 rounded-full object-cover ring-4 ring-gray-300"
+                                src="images/ab.jpg"
+                                alt="Ceo image"
+                            />
+
+                            <h1 className="mt-4 text-2xl font-semibold text-white/50 capitalize group-hover:text-white dark:text-white">
+                                ABDO
+                            </h1>
+
+                            <p className="mt-2 text-white/50 capitalize group-hover:text-gray-300 dark:text-gray-300">
+                                Ceo and co-founder
+                            </p>
+                        </div>
+
+                        <div className="group flex transform cursor-pointer flex-col items-center rounded-xl border p-8 transition-colors duration-300 hover:border-transparent hover:bg-blue-600 dark:border-gray-700 dark:hover:border-transparent">
+                            <img
+                                className="h-32 w-32 rounded-full object-cover ring-4 ring-gray-300"
+                                src="images/mame.jpg"
+                                alt="lead Developer's image"
+                            />
+
+                            <h1 className="mt-4 text-2xl font-semibold text-white/50 capitalize group-hover:text-white dark:text-white">
+                                Mohammed.
+                            </h1>
+
+                            <p className="mt-2 text-gray-500 capitalize group-hover:text-gray-300 dark:text-gray-300">
+                                Lead Developer
+                            </p>
+                        </div>
+
+                        <div className="group flex transform cursor-pointer flex-col items-center rounded-xl border p-8 transition-colors duration-300 hover:border-transparent hover:bg-blue-600 dark:border-gray-700 dark:hover:border-transparent">
+                            <img
+                                className="h-32 w-32 rounded-full object-cover ring-4 ring-gray-300"
+                                src="images/kam.jpg"
+                                alt="content Writter phot"
+                            />
+
+                            <h1 className="mt-4 text-2xl font-semibold text-white/50 capitalize group-hover:text-white dark:text-white">
+                                Kamil M.
+                            </h1>
+
+                            <p className="mt-2 text-white/50 capitalize group-hover:text-gray-300 dark:text-gray-300">
+                                Super viser
+                            </p>
+                        </div>
+
+                        <div className="group flex transform cursor-pointer flex-col items-center rounded-xl border p-8 transition-colors duration-300 hover:border-transparent hover:bg-blue-600 dark:border-gray-700 dark:hover:border-transparent">
+                            <img
+                                className="h-32 w-32 rounded-full object-cover ring-4 ring-gray-300"
+                                src="images/lecturer.jpg"
+                                alt="lecturer image"
+                            />
+
+                            <h1 className="mt-4 text-2xl font-semibold text-white/50 capitalize group-hover:text-white dark:text-white">
+                                Temu
+                            </h1>
+
+                            <p className="mt-2 text-gray-500 capitalize group-hover:text-gray-300 dark:text-gray-300">
+                                Lecturer and staff Leader
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
             {/* Contact Section */}
-            <section
-                id="contact"
-                className="relative bg-slate-900 py-16 dark:bg-gray-900"
-            >
-                <div className="mx-auto max-w-screen-xl px-6 text-center lg:px-8">
-                    <h2 className="text-4xl font-extrabold text-[#a2b0ab] sm:text-5xl dark:text-white">
+            {/* <section id="contact" className="bg-[#101828]">
+                <div className="mx-auto max-w-screen-xl bg-[#10182] px-6 text-center lg:px-8">
+                    <h2 className="text-4xl font-extrabold text-white/50 sm:text-5xl">
                         Let's Connect
                     </h2>
                     <p className="mx-auto mt-4 max-w-2xl text-lg text-[#a2b0ab] dark:text-gray-400">
@@ -338,7 +336,7 @@ export default function Welcome() {
                     </p>
 
                     <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {/* Phone */}
+
                         <div className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900">
                             <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-700 text-[#a2b0ab]">
                                 <PhoneCall />
@@ -351,7 +349,7 @@ export default function Welcome() {
                             </p>
                         </div>
 
-                        {/* Email / Collaboration */}
+
                         <div className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900">
                             <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-700 text-[#a2b0ab]">
                                 <MailOpenIcon />
@@ -364,7 +362,7 @@ export default function Welcome() {
                             </p>
                         </div>
 
-                        {/* Location */}
+
                         <div className="group rounded-2xl border border-gray-100 bg-[#181D1C] p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-gray-700 dark:from-gray-800 dark:to-gray-900">
                             <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-700 text-[#a2b0ab]">
                                 <MapPinIcon />
@@ -378,7 +376,7 @@ export default function Welcome() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* Footer Section */}
             <section className="bg-gray-900 py-12 text-gray-300" id="footer">
