@@ -1,6 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -16,88 +17,127 @@ interface ModuleType {
     slug: string;
     description: string;
     thumbnail_url: string;
-    file_url: string
+    file_url: string;
     user_id: number;
-    author_name: string;
+    author?: {
+        name: string;
+    };
     published_at: string;
 }
 
 export default function Dashboard() {
-    const { props } = usePage<{ modules?: ModuleType[] }>();
-    const modules = props.modules ?? [];
+    const { props } = usePage<{
+        modules: {
+            data: ModuleType[];
+            links: { url: string | null; label: string; active: boolean }[];
+        };
+        filters: {
+            search: string;
+        };
+    }>();
+
+    const searchFromServer = props.filters?.search ?? '';
+    const [search, setSearch] = useState(searchFromServer);
+
+    const modules = props.modules?.data ?? [];
+    const links = props.modules?.links ?? [];
+
+    // Debounced search
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            router.get(
+                route('dashboard'),
+                { search },
+                { preserveState: true, preserveScroll: true },
+            );
+        }, 500);
+
+        return () => clearTimeout(delay);
+    }, [search]);
+    // comment logic
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
 
-            <section className="bg-white py-12 dark:bg-gray-900">
+            <section className="flex w-full items-center justify-center bg-white dark:bg-black">
                 {modules.length === 0 ? (
-                    <p className="mt-10 text-center text-gray-400 dark:text-gray-500">
-                        No modules available yet.
+                    <p className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black">
+                        No modules available now please come back later.
                     </p>
                 ) : (
-                    <div className="mx-auto max-w-screen-xl px-4 lg:px-6">
-
-                        {/* Header */}
-                        <div className="mx-auto mb-12 max-w-screen-md text-center">
-                            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 lg:text-4xl dark:text-white">
-                                Learn Smarter, Faster
-                            </h2>
-                            <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
-                                Explore curated courses, get A+, and level up your
-                                profession with our updated modules.
-                            </p>
+                    <div className="relative z-20 mx-auto max-w-screen-xl px-4 py-8">
+                        {/* Search Bar */}
+                        <div className="mx-auto mb-8 flex max-w-md items-center gap-3">
+                            <input
+                                type="text"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                placeholder="Search modules by title..."
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-sm focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+                            />
                         </div>
 
-                        {/* Grid */}
+                        {/* Post Card */}
                         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                             {modules.map((module) => (
                                 <article
                                     key={module.id}
-                                    className="group rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
+                                    className="group rounded-xl bg-[#181D1C] p-6 shadow-sm"
                                 >
-                                    {/* Thumbnail */}
-                                    <div className="relative h-56 overflow-hidden rounded-lg sm:h-56 md:h-64 lg:h-48">
+                                    <div className="relative h-56 overflow-hidden rounded-lg">
                                         <img
-                                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                            className="h-full w-full object-cover"
                                             src={module.thumbnail_url}
                                             alt={module.title}
                                         />
-                                        <span className="absolute top-3 left-3 bg-primary-100 text-primary-800 rounded-full px-3 py-1 text-xs font-semibold">
-                                            Posted
-                                        </span>
                                     </div>
 
-                                    {/* Title */}
-                                    <h2 className="mt-4 text-xl font-bold text-gray-900 transition-colors group-hover:text-primary-600 dark:text-white">
+                                    <h2 className="mt-4 text-xl font-semibold text-white">
                                         {module.title}
                                     </h2>
 
-                                    {/* Description */}
-                                    <div
-                                        className="prose dark:prose-invert mt-2 line-clamp-3 max-w-none text-sm text-gray-500 dark:text-gray-400"
-                                        dangerouslySetInnerHTML={{
-                                            __html:
-                                                module.description.length > 400
-                                                    ? module.description.substring(0, 400) + '…'
-                                                    : module.description,
-                                        }}
-                                    ></div>
+                                    <div className="mt-2 line-clamp-3 text-sm text-gray-400">
+                                        {module.description}
+                                    </div>
 
-                                    {/* Footer */}
-                                    <div className="mt-4 flex items-center justify-between">
-                                        <span className="text-sm font-medium text-primary-600 dark:text-primary-400">
-                                            {module.author_name}
+                                    <div className="mt-4 flex items-center justify-between text-sm text-gray-400">
+                                        <span>
+                                            {module.author?.name ?? 'Unknown'}
                                         </span>
 
-                                        <a
-                                            href={route('modules.show', { slug: module.slug })}
-                                            className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-400 flex items-center gap-1"
+                                        <Link
+                                            href={route('modules.show', {
+                                                slug: module.slug,
+                                            })}
+                                            className="hover:underline"
                                         >
                                             Read more →
-                                        </a>
+                                        </Link>
                                     </div>
                                 </article>
+                            ))}
+                        </div>
+
+                        {/* Pagination */}
+                        <div className="mt-10 flex justify-center space-x-2">
+                            {links.map((link, i) => (
+                                <Link
+                                    key={i}
+                                    href={link.url || '#'}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
+                                    className={`rounded-lg px-4 py-2 text-sm transition ${
+                                        link.active
+                                            ? 'bg-blue-600 text-white'
+                                            : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
+                                    } ${
+                                        !link.url
+                                            ? 'cursor-not-allowed opacity-50'
+                                            : 'hover:bg-blue-500 hover:text-white'
+                                    } `}
+                                />
                             ))}
                         </div>
                     </div>
