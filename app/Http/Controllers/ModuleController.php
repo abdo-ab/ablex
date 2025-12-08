@@ -40,6 +40,32 @@ class ModuleController extends Controller
         ]);
     }
 
+    public function read(Module $module)
+    {
+        if (!Auth::check()) {
+            abort(403, 'Unauthorized');
+        }
+
+        if (!$module->file_url) {
+            abort(404, 'PDF file not found.');
+        }
+
+        return response()->json([
+            'url' => $module->file_url,
+        ]);
+    }
+
+    public function viewer(Module $module)
+    {
+        if (!Auth::check()) {
+            abort(403);
+        }
+
+        return Inertia::render('PdfViewer', [
+            'module' => $module,
+        ]);
+    }
+
     public function storeComment(Request $request, Module $module)
     {
         $validated = $request->validate([
@@ -54,43 +80,55 @@ class ModuleController extends Controller
         return back()->with('success', 'Comment added!');
     }
 
-    // LIKE LOGIC
-public function toggleLike(Module $module)
-{
-    $user = Auth::user();
+    // LIKE LOGIC - UPDATED FOR REAL TIME COUNT
+    public function toggleLike(Module $module)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            abort(403);
+        }
 
-    if (!$user) {
-        abort(403, 'You must be logged in to like a module.');
+        $existing = $module->likes()->where('user_id', $user->id)->first();
+
+        if ($existing) {
+            $existing->delete();
+        } else {
+            $module->likes()->create([
+                'user_id' => $user->id,
+            ]);
+        }
+
+        return back();
     }
 
-    $alreadyLiked = $module->likes()->where('user_id', $user->id)->first();
+    public function show($slug)
+    {
+        $module = Module::with([
+            'comments.user:id,name',
+            'author:id,name'
+        ])
+        ->where('slug', $slug)
+        ->firstOrFail();
 
-    if ($alreadyLiked) {
-        $alreadyLiked->delete();
-    } else {
-        $module->likes()->create([
-            'user_id' => $user->id,
+        return Inertia::render('PostDetail', [
+            'module' => [
+                'id' => $module->id,
+                'title' => $module->title,
+                'slug' => $module->slug,
+                'description' => $module->description,
+                'thumbnail_url' => $module->thumbnail_url,
+                'file_url' => $module->file_url,
+                'author_name' => $module->author?->name,
+                'published_at' => $module->published_at,
+                'comments' => $module->comments,
+                'likes_count' => $module->likes()->count(),
+            ],
+            'auth' => [
+                'user' => Auth::user()
+            ],
+            'isLiked' => Auth::check()
+                ? $module->likes()->where('user_id', Auth::id())->exists()
+                : false,
         ]);
     }
-
-    // Return JSON with updated like count for frontend
-return redirect()->back();
-}
-
-public function show($slug)
-{
-    $module = Module::where('slug', $slug)->firstOrFail();
-
-    // Load comments and likes  for display
-    $module->load([
-        'comments.user:id,name',
-        'likes',
-    ]);
-
-    return Inertia::render('PostDetail', [
-        'module' => $module,
-        'likeCount' => $module->likes()->count(),
-    ]);
-}
-
 }

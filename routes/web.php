@@ -21,6 +21,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('dashboard');
     Route::get('modules/{slug}', [ModuleController::class, 'show'])
         ->name('modules.show');
+            //  Protected PDF stream
+    Route::get('/modules/{module}/read', [ModuleController::class, 'read'])
+        ->name('modules.read');
+
+    //  PDF Viewer page in React
+    Route::get('/modules/{module}/viewer', [ModuleController::class, 'viewer'])
+        ->name('modules.viewer');
+        // like and comment
 Route::post('/modules/{module}/comments', [ModuleController::class, 'storeComment'])->name('modules.comment');
     Route::post('/modules/{module}/like-toggle', [ModuleController::class, 'toggleLike'])
         ->name('modules.like.toggle');
@@ -30,7 +38,7 @@ Route::fallback(function () {
     return inertia('Errors/NotFound');
 });
 // forbidden
-Route::get('/errors/403', fn () => inertia('pages/Errors/Forbidden'));
+Route::get('/errors/403', fn () => inertia('errors/forbidden'));
 
 
 require __DIR__.'/settings.php';
