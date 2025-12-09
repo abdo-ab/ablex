@@ -1,15 +1,13 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { route } from 'ziggy-js';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: route('dashboard'),
-    },
-];
+interface BreadcrumbItem {
+    title: string;
+    href: string;
+}
 
 interface ModuleType {
     id: number;
@@ -18,23 +16,34 @@ interface ModuleType {
     description: string;
     thumbnail_url: string;
     file_url: string;
-    user_id: number;
     author?: {
         name: string;
     };
     published_at: string;
 }
 
+interface PageProps {
+    [key: string]: unknown;
+    modules: {
+        data: ModuleType[];
+        links: { url: string | null; label: string; active: boolean }[];
+    };
+    filters: {
+        search: string;
+    };
+}
+
+// --- Component Implementation ---
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: route('dashboard'),
+    },
+];
+
 export default function Dashboard() {
-    const { props } = usePage<{
-        modules: {
-            data: ModuleType[];
-            links: { url: string | null; label: string; active: boolean }[];
-        };
-        filters: {
-            search: string;
-        };
-    }>();
+    const { props } = usePage<PageProps>();
 
     const searchFromServer = props.filters?.search ?? '';
     const [search, setSearch] = useState(searchFromServer);
@@ -42,106 +51,126 @@ export default function Dashboard() {
     const modules = props.modules?.data ?? [];
     const links = props.modules?.links ?? [];
 
-    // Debounced search
+    //  search logic
     useEffect(() => {
         const delay = setTimeout(() => {
-            router.get(
-                route('dashboard'),
-                { search },
-                { preserveState: true, preserveScroll: true },
-            );
+            if (search !== props.filters?.search) {
+                router.get(
+                    route('dashboard'),
+                    { search },
+                    { preserveState: true, preserveScroll: true },
+                );
+            }
         }, 500);
 
         return () => clearTimeout(delay);
-    }, [search]);
-    // comment logic
+    }, [search, props.filters?.search]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
 
-            <section className="flex w-full items-center justify-center bg-white dark:bg-black">
-                {modules.length === 0 ? (
-                    <p className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white dark:bg-black">
-                        No modules available now please come back later.
-                    </p>
-                ) : (
-                    <div className="relative z-20 mx-auto max-w-screen-xl px-4 py-8">
-                        {/* Search Bar */}
-                        <div className="mx-auto mb-8 flex max-w-md items-center gap-3">
+            {/*  The main section   */}
+            <section className="min-h-[80vh] rounded-xl bg-white py-6 shadow-xl sm:py-10 dark:border dark:border-gray-800 dark:bg-gray-950 dark:shadow-none">
+                <div className="relative z-20 mx-auto max-w-screen-xl px-4">
+                    {/*  Search Bar Container */}
+                    <div className="mb-8 flex w-full justify-center md:justify-end">
+                        <div className="relative w-full max-w-md">
                             <input
                                 type="text"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder="Search modules by title..."
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-sm focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+                                className="w-full rounded-full border border-gray-300 bg-gray-50 px-5 py-3 pl-12 text-gray-800 shadow-sm transition-colors focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-200"
+                            />
+                            <Search
+                                size={20}
+                                className="absolute top-1/2 left-4 -translate-y-1/2 transform text-gray-400"
                             />
                         </div>
-
-                        {/* Post Card */}
-                        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {modules.map((module) => (
-                                <article
-                                    key={module.id}
-                                    className="group rounded-xl bg-[#181D1C] p-6 shadow-sm"
-                                >
-                                    <div className="relative h-56 overflow-hidden rounded-lg">
-                                        <img
-                                            className="h-full w-full object-cover"
-                                            src={module.thumbnail_url}
-                                            alt={module.title}
-                                        />
-                                    </div>
-
-                                    <h2 className="mt-4 text-xl font-semibold text-white">
-                                        {module.title}
-                                    </h2>
-
-                                    <div className="mt-2 line-clamp-3 text-sm text-gray-400">
-                                        {module.description}
-                                    </div>
-
-                                    <div className="mt-4 flex items-center justify-between text-sm text-gray-400">
-                                        <span>
-                                            {module.author?.name ?? 'Unknown'}
-                                        </span>
-
-                                        <Link
-                                            href={route('modules.show', {
-                                                slug: module.slug,
-                                            })}
-                                            className="hover:underline"
-                                        >
-                                            Read more →
-                                        </Link>
-                                    </div>
-                                </article>
-                            ))}
-                        </div>
-
-                        {/* Pagination */}
-                        <div className="mt-10 flex justify-center space-x-2">
-                            {links.map((link, i) => (
-                                <Link
-                                    key={i}
-                                    href={link.url || '#'}
-                                    dangerouslySetInnerHTML={{
-                                        __html: link.label,
-                                    }}
-                                    className={`rounded-lg px-4 py-2 text-sm transition ${
-                                        link.active
-                                            ? 'bg-blue-600 text-white'
-                                            : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
-                                    } ${
-                                        !link.url
-                                            ? 'cursor-not-allowed opacity-50'
-                                            : 'hover:bg-blue-500 hover:text-white'
-                                    } `}
-                                />
-                            ))}
-                        </div>
                     </div>
-                )}
+
+                    {/*   All Module Posts */}
+                    {modules.length === 0 ? (
+                        <div className="p-16 text-center text-gray-600 dark:text-gray-400">
+                            <p className="text-xl font-medium">
+                                No modules found.
+                            </p>
+                            <p className="mt-2 text-sm">
+                                Try a different search term or check back later.
+                            </p>
+                        </div>
+                    ) : (
+                        <>
+                            {/* Post Card  */}
+                            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                                {modules.map((module) => (
+                                    <Link
+                                        key={module.id}
+                                        href={route('modules.show', {
+                                            slug: module.slug,
+                                        })}
+                                        className="group block transform overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
+                                    >
+                                        <div className="relative h-44 overflow-hidden">
+                                            <img
+                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                src={module.thumbnail_url}
+                                                alt={module.title}
+                                            />
+                                        </div>
+                                        <div className="p-4 sm:p-5">
+                                            <h2 className="line-clamp-2 text-lg font-bold text-gray-900 dark:text-white">
+                                                {module.title}
+                                            </h2>
+                                            <p className="mt-2 line-clamp-3 text-sm text-gray-600 dark:text-gray-400">
+                                                {module.description.length > 100
+                                                    ? module.description.substring(
+                                                          0,
+                                                          100,
+                                                      ) + '...'
+                                                    : module.description}
+                                            </p>
+
+                                            <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3 text-xs font-medium text-gray-500 dark:border-gray-800 dark:text-gray-400">
+                                                <span className="truncate">
+                                                    Posted By:{' '}
+                                                    {module.author?.name ??
+                                                        'Unknown'}
+                                                </span>
+                                                <span className="text-indigo-600 dark:text-indigo-400">
+                                                    Read →
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            {/* Pagination */}
+                            <div className="mt-10 flex justify-center space-x-2">
+                                {links.map((link, i) => (
+                                    <Link
+                                        key={i}
+                                        href={link.url || '#'}
+                                        dangerouslySetInnerHTML={{
+                                            __html: link.label,
+                                        }}
+                                        className={`rounded-full px-4 py-2 text-sm font-medium transition duration-200 ${
+                                            link.active
+                                                ? 'bg-indigo-600 text-white shadow-md'
+                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                                        } ${
+                                            !link.url
+                                                ? 'cursor-not-allowed opacity-50'
+                                                : 'hover:scale-[1.05]'
+                                        } `}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </div>
             </section>
         </AppLayout>
     );
