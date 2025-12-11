@@ -80,7 +80,7 @@ class ModuleController extends Controller
         return back()->with('success', 'Comment added!');
     }
 
-    // LIKE LOGIC - UPDATED FOR REAL TIME COUNT
+    // LIKE LOGIC
     public function toggleLike(Module $module)
     {
         $user = Auth::user();
