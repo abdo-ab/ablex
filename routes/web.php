@@ -38,7 +38,7 @@ Route::fallback(function () {
     return inertia('Errors/NotFound');
 });
 // forbidden
-Route::get('/errors/403', fn () => inertia('errors/forbidden'));
+// Route::get('/errors/403', fn () => inertia('errors/forbidden'));
 
 
 require __DIR__.'/settings.php';

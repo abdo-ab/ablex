@@ -2,6 +2,8 @@
 
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\ProtectFilamentAdmin;
+use App\Http\Middleware\SuperAdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -23,7 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         ]);
          $middleware->alias([
-                'admin' => app\Http\Middleware\ProtectFilamentAdmin::class
+                'admin' => ProtectFilamentAdmin::class,
+                'superAdmin' => SuperAdminMiddleware::class,
             ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
