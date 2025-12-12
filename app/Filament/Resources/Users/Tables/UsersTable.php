@@ -22,7 +22,8 @@ class UsersTable
                 SelectColumn::make("Role")
                 ->options([
                     "user" => "user",
-                    "admin" => "admin"
+                    "admin" => "admin",
+                    "superAdmin" => "superAdmin"
 
                 ]),
 
