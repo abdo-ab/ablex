@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/modules/{module}/read', [ModuleController::class, 'read'])
         ->name('modules.read');
 
-    //  PDF Viewer page in React
+    //  PDF Viewer page 
     Route::get('/modules/{module}/viewer', [ModuleController::class, 'viewer'])
         ->name('modules.viewer');
         // like and comment
@@ -38,7 +38,8 @@ Route::fallback(function () {
     return inertia('Errors/NotFound');
 });
 // forbidden
-// Route::get('/errors/403', fn () => inertia('errors/forbidden'));
+Route::get('/errors/403', fn () => inertia('errors/forbidden'));
+
 
 
 require __DIR__.'/settings.php';
