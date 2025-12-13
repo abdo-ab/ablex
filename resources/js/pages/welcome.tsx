@@ -2,19 +2,11 @@ import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowRight,
-    BarChart3,
     BellPlus,
-    BookOpen,
-    CheckCircle2,
-    Github,
-    Globe,
-    Layout,
-    Linkedin,
     Lock,
     Menu,
     TimerIcon,
     X,
-    Zap
 } from 'lucide-react';
 import { useState } from 'react';
 import { route } from 'ziggy-js';
@@ -60,9 +52,9 @@ export default function Welcome() {
             image: 'images/kam.jpg',
         },
         {
-            name: 'Temu',
-            role: 'Lecturer & Team Lead',
-            image: 'images/lecturer.jpg',
+            name: 'Abdurazak',
+            role: 'Lecturer & school Director',
+            image: 'images/Teacher_Abdo.jpg',
         },
     ];
 
@@ -311,16 +303,14 @@ export default function Welcome() {
                     </div>
                     <div className="mt-12 border-t border-white/5 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
                         <p className="text-sm text-slate-500">
-                            &copy; {new Date().getFullYear()} Ablex Inc. All rights reserved.
+                            &copy; {new Date().getFullYear()} Ablex. All rights reserved.
                         </p>
                         <div className="flex gap-4">
                             <a href="https://github.com/abdo-ab" className="text-slate-400 hover:text-white transition-colors">
                                 <span className="sr-only">GitHub</span>
-                                <Github className="h-5 w-5" />
                             </a>
                             <a href="https://www.linkedin.com/in/abdo-mohammed-3853aa397/" className="text-slate-400 hover:text-white transition-colors">
                                 <span className="sr-only">LinkedIn</span>
-                                <Linkedin className="h-5 w-5" />
                             </a>
                         </div>
                     </div>
