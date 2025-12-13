@@ -1,7 +1,5 @@
 # 🚀 Ablex - The Future of Learning
 
-![Ablex Banner](public/images/ablex_dashboard.png) 
-
 
 **Project Name:** Ablex  
 **Team:** The Visionaries (Abdo, Mohammed, Kamil M., Abdurazak)  
