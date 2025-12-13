@@ -19,7 +19,7 @@ class ProtectFilamentAdmin
 
         if (Auth::user()->Role !== 'admin') {
 
-            return Inertia::render('forbidden');
+            return redirect('/forbidden');
         }
 
         return $next($request);
