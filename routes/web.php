@@ -6,7 +6,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\ModuleController;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
+// guest welcome page
+ Route::get('/', function () {
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
@@ -29,7 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/modules/{module}/viewer', [ModuleController::class, 'viewer'])
         ->name('modules.viewer');
         // like and comment
-Route::post('/modules/{module}/comments', [ModuleController::class, 'storeComment'])->name('modules.comment');
+     Route::post('/modules/{module}/comments', [ModuleController::class, 'storeComment'])->name('modules.comment');
     Route::post('/modules/{module}/like-toggle', [ModuleController::class, 'toggleLike'])
         ->name('modules.like.toggle');
 });
@@ -37,8 +38,6 @@ Route::post('/modules/{module}/comments', [ModuleController::class, 'storeCommen
 Route::fallback(function () {
     return inertia('Errors/NotFound');
 });
-// forbidden
-Route::get('/errors/403', fn () => inertia('errors/forbidden'));
 
 
 

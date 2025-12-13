@@ -28,11 +28,6 @@ export default function Login({
             <div className="container mx-auto flex min-h-screen items-center justify-center px-6">
                 <div className="w-full max-w-md">
                     <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
-                        <img
-                            className="h-7 w-7 sm:h-8"
-                            src="/images/App-logo.png"
-                            alt="Ablex Logo"
-                        />
 
                         <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                             Log in to Ablex
