@@ -33,8 +33,6 @@ interface PageProps {
     };
 }
 
-// --- Component Implementation ---
-
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -51,7 +49,6 @@ export default function Dashboard() {
     const modules = props.modules?.data ?? [];
     const links = props.modules?.links ?? [];
 
-    //  search logic
     useEffect(() => {
         const delay = setTimeout(() => {
             if (search !== props.filters?.search) {
@@ -70,10 +67,20 @@ export default function Dashboard() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
 
-            {/*  The main section   */}
             <section className="min-h-[80vh] rounded-xl bg-white py-6 shadow-xl sm:py-10 dark:border dark:border-gray-800 dark:bg-gray-950 dark:shadow-none">
                 <div className="relative z-20 mx-auto max-w-screen-xl px-4">
-                    {/*  Search Bar Container */}
+
+                    {/* Page Title + Description */}
+                    <div className="mb-6 max-w-xl">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
+                            Explore Learning Modules
+                        </h1>
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                            Browse modules shared by lecturers across different subjects. Read the details, download resources, and learn at your own pace.
+                        </p>
+                    </div>
+
+                    {/* Search Bar */}
                     <div className="mb-8 flex w-full justify-center md:justify-end">
                         <div className="relative w-full max-w-md">
                             <input
@@ -90,7 +97,7 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    {/*   All Module Posts */}
+                    {/* Modules */}
                     {modules.length === 0 ? (
                         <div className="p-16 text-center text-gray-600 dark:text-gray-400">
                             <p className="text-xl font-medium">
@@ -102,7 +109,6 @@ export default function Dashboard() {
                         </div>
                     ) : (
                         <>
-                            {/* Post Card  */}
                             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {modules.map((module) => (
                                     <Link
@@ -123,23 +129,19 @@ export default function Dashboard() {
                                             <h2 className="line-clamp-2 text-lg font-bold text-gray-900 dark:text-white">
                                                 {module.title}
                                             </h2>
-                                            <p className="mt-2 line-clamp-3 text-sm text-gray-600 dark:text-gray-400">
-                                                {module.description.length > 100
-                                                    ? module.description.substring(
-                                                          0,
-                                                          100,
-                                                      ) + '...'
-                                                    : module.description}
-                                            </p>
+                                            <div
+                                                className="mt-2 line-clamp-3 text-sm text-gray-600 dark:text-gray-400"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: module.description,
+                                                }}
+                                            />
 
                                             <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3 text-xs font-medium text-gray-500 dark:border-gray-800 dark:text-gray-400">
                                                 <span className="truncate">
-                                                    Posted By:{' '}
-                                                    {module.author?.name ??
-                                                        'Unknown'}
+                                                    {module.author?.name ?? 'Unknown'}
                                                 </span>
                                                 <span className="text-indigo-600 dark:text-indigo-400">
-                                                    Read →
+                                                    View Module
                                                 </span>
                                             </div>
                                         </div>
@@ -164,7 +166,7 @@ export default function Dashboard() {
                                             !link.url
                                                 ? 'cursor-not-allowed opacity-50'
                                                 : 'hover:scale-[1.05]'
-                                        } `}
+                                        }`}
                                     />
                                 ))}
                             </div>
