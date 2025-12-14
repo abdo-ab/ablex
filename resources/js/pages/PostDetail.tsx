@@ -329,71 +329,91 @@ export default function PostDetails() {
 
                 {/* COMMENTS SECTION */}
                 <section className="mx-auto mt-12 max-w-4xl">
-                    <h2 className="mb-6 border-b border-gray-200 pb-2 text-2xl font-bold text-gray-900 dark:border-gray-800 dark:text-white">
-                        Write Your Thoughts ({safeComments.length})
+                    <h2 className="mb-8 text-xl font-bold text-gray-900 dark:text-white">
+                        {safeComments.length} Comments
                     </h2>
 
                     {/* Comment Form */}
                     {auth.user ? (
-                        <form
-                            onSubmit={submit}
-                            className="mb-8 rounded-xl bg-white p-6 shadow dark:border dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
-                        >
-                            <textarea
-                                id="comment"
-                                value={data.body}
-                                onChange={(e) =>
-                                    setData('body', e.target.value)
-                                }
-                                className="w-full resize-y rounded-lg border border-gray-300 bg-gray-50 p-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                                rows={4}
-                                placeholder="Write a comment..."
-                                required
-                            />
-                            <button
-                                disabled={
-                                    processing || data.body.trim().length === 0
-                                }
-                                className="mt-4 rounded-full bg-indigo-600 px-6 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-indigo-400"
-                            >
-                                {processing ? 'Posting...' : 'Post Comment'}
-                            </button>
-                        </form>
+                        <div className="mb-10 flex gap-4">
+                            <div className="flex-shrink-0">
+                                {auth.user.name ? (
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
+                                        {auth.user.name.charAt(0)}
+                                    </div>
+                                ) : (
+                                    <UserCircle
+                                        size={40}
+                                        className="text-gray-400"
+                                    />
+                                )}
+                            </div>
+                            <form className="w-full" onSubmit={submit}>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        value={data.body}
+                                        onChange={(e) =>
+                                            setData('body', e.target.value)
+                                        }
+                                        className="w-full border-b border-gray-300 bg-transparent py-2 text-gray-900 placeholder-gray-500 transition-colors focus:border-indigo-600 focus:outline-none focus:ring-0 dark:border-gray-700 dark:text-white dark:focus:border-indigo-400"
+                                        placeholder="Add a comment..."
+                                        required
+                                    />
+                                </div>
+                                <div className={`mt-3 flex justify-end gap-2 transition-opacity duration-200 ${data.body.trim().length > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                                    <button
+                                        type="button"
+                                        onClick={() => reset('body')}
+                                        className="rounded-full px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        disabled={processing || data.body.trim().length === 0}
+                                        className="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:bg-gray-300 dark:disabled:bg-gray-700"
+                                    >
+                                        Comment
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     ) : (
-                        <div className="mb-8 rounded-lg border border-dashed border-gray-300 bg-white p-4 text-center dark:border-gray-700 dark:bg-gray-900">
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                You must be logged in to post a comment.
+                        <div className="mb-10 rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-900/50">
+                            <p className="text-gray-600 dark:text-gray-400">
+                                <a href={route('login')} className="font-semibold text-indigo-600 hover:underline dark:text-indigo-400">Log in</a> to join the discussion.
                             </p>
                         </div>
                     )}
 
                     {/* Display Comments */}
-                    <div className="space-y-4">
+                    <div className="space-y-8">
                         {safeComments.length > 0 ? (
                             safeComments.map((comment) => (
-                                <div
-                                    key={comment.id}
-                                    className="rounded-xl bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-md dark:border dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
-                                >
-                                    <div className="mb-2 flex items-center justify-between">
-                                        <p className="flex items-center gap-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400">
-                                            <UserCircle size={16} />
-                                            {comment.user.name}
-                                        </p>
-                                        <p className="text-xs text-gray-400 dark:text-gray-500">
-                                            {formatRelativeTime(
-                                                comment.created_at,
-                                            )}
+                                <div key={comment.id} className="group flex gap-4">
+                                    <div className="flex-shrink-0">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-sm font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                                            {comment.user.name.charAt(0)}
+                                        </div>
+                                    </div>
+                                    <div className="flex-grow">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                                                {comment.user.name}
+                                            </span>
+                                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                {formatRelativeTime(comment.created_at)}
+                                            </span>
+                                        </div>
+                                        <p className="mt-1 text-sm leading-relaxed text-gray-800 dark:text-gray-200">
+                                            {comment.body}
                                         </p>
                                     </div>
-                                    <p className="leading-relaxed text-gray-800 dark:text-gray-200">
-                                        {comment.body}
-                                    </p>
                                 </div>
                             ))
                         ) : (
-                            <p className="py-4 text-center text-base text-gray-500 italic">
-                                Be the first to start the discussion!
+                            <p className="py-8 text-center text-gray-500 dark:text-gray-400">
+                                No comments yet. Be the first to share your thoughts!
                             </p>
                         )}
                     </div>
