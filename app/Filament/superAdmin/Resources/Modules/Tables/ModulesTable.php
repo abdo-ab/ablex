@@ -17,7 +17,6 @@ class ModulesTable
         return $table
             ->columns([
                 TextColumn::make("title"),
-                TextColumn::make("description"),
                 TextColumn::make("thumbnail_url"),
                 TextColumn::make("file_url"),
                 TextColumn::make("slug"),

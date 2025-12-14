@@ -7,8 +7,6 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\TextColumn;
-use Illuminate\Support\Facades\Schema as FacadesSchema;
 
 class ModuleForm
 {
@@ -27,14 +25,14 @@ class ModuleForm
                 ->helperText("enter the brief description of the module.")
              ->fileAttachmentsDisk('r2')
                 ->fileAttachmentsDirectory('editor-uploads')
-                ->fileAttachmentsVisibility('public')                
+                ->fileAttachmentsVisibility('public')
                 ->toolbarButtons([
                     'bold', 'italic', 'underline', 'strike',
                     'bulletList', 'orderedList', 'link',
                     'h2', 'h3', 'blockquote', 'codeBlock',
                     'attachFiles', 'undo', 'redo',
                 ]),
-            
+
 
                  // thumbnail as image
                 FileUpload::make("thumbnail_url")
@@ -55,7 +53,7 @@ class ModuleForm
 
               Hidden::make('user_id'),
               Hidden::make('author_name'),
-               
+
 
             ]);
 }
