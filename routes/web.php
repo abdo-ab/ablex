@@ -34,7 +34,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/modules/{module}/like-toggle', [ModuleController::class, 'toggleLike'])
         ->name('modules.like.toggle');
 });
-// 404
+// forbidden page
+Route::get('/forbidden', function () {
+    return Inertia::render('forbidden');
+})->name('forbidden');
+// 404 page
 Route::fallback(function () {
     return inertia('Errors/NotFound');
 });
