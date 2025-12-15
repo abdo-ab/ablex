@@ -51,7 +51,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         const delay = setTimeout(() => {
-            if (search !== props.filters?.search) {
+            if (search !== (props.filters?.search ?? '')) {
                 router.get(
                     route('dashboard'),
                     { search },
