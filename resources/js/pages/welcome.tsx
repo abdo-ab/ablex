@@ -81,7 +81,7 @@ export default function Welcome() {
                     <div className="hidden items-center gap-8 lg:flex">
                         <div className="flex gap-6 text-sm font-medium text-slate-400">
                             <a
-                                href="#hero"
+                                href="/"
                                 className="transition-colors hover:text-white"
                             >
                                 Home
