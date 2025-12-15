@@ -28,8 +28,8 @@ class ModuleController extends Controller
             ->when($search, function ($query) use ($search) {
                 $query->where('title', 'like', '%' . $search . '%');
             })
-            ->latest('published_at')
-            ->paginate(10)
+            ->orderBy('id', 'desc')
+            ->paginate(6)
             ->withQueryString();
 
         return Inertia::render('Dashboard', [
