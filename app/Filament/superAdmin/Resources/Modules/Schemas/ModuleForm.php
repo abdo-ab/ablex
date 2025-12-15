@@ -7,6 +7,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Validation\ValidationException;
 
 class ModuleForm
 {
@@ -41,15 +42,17 @@ class ModuleForm
                 ->image()
                 ->preserveFilenames()
                 ->visibility('public')
+                ->acceptedFileTypes(['image/*'])
                 ->required(),
 
                 // file as download link
                 FileUpload::make("file_url")
                 ->disk('r2')
-                ->directory('files')
+                 ->directory('files')
                 ->preserveFilenames()
                 ->visibility('public')
-                ->required(),
+                ->required()
+                 ->acceptedFileTypes(['application/pdf']) ,
 
               Hidden::make('user_id'),
               Hidden::make('author_name'),
