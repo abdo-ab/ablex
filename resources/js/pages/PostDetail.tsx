@@ -60,7 +60,7 @@ const PdfModal: React.FC<PdfModalProps> = ({
 
     return (
         <div className="bg-opacity-90 fixed inset-0 z-50 flex items-center justify-center bg-gray-900 p-4 backdrop-blur-sm">
-            {/* Modal container: Full height/width on small screens, constrained on medium/large */}
+            {/* Modal container */}
             <div className="relative h-full w-full max-w-7xl rounded-xl bg-white md:h-[90%] md:w-[90%] dark:bg-gray-950">
                 <div className="flex items-center justify-between border-b border-gray-200 p-4 dark:border-gray-800">
                     <h2 className="truncate text-lg font-semibold text-gray-900 dark:text-white">
@@ -207,7 +207,7 @@ export default function PostDetails() {
 
             {/* PDF Viewer Modal */}
             <PdfModal
-                fileUrl={module.file_url}
+                fileUrl={route('modules.read', { module: module.id })}
                 title={module.title}
                 isOpen={pdfModalOpen}
                 onClose={() => setPdfModalOpen(false)}
@@ -312,8 +312,11 @@ export default function PostDetails() {
 
                                         {/* Download button remains */}
                                         <a
-                                            href={module.file_url}
+                                            href={route('modules.read', {
+                                                module: module.id,
+                                            })}
                                             target="_blank"
+                                            rel="noopener noreferrer"
                                             download
                                             className="flex w-full transform items-center justify-center gap-3 rounded-full border border-indigo-600 bg-transparent px-6 py-3 text-base font-bold text-indigo-600 transition-all duration-300 hover:scale-[1.02] hover:bg-indigo-50 sm:w-auto dark:text-indigo-400 dark:hover:bg-gray-800"
                                         >
