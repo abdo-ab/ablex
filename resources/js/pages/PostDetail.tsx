@@ -3,15 +3,7 @@ import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-import {
-    ArrowLeft,
-    BookOpen,
-    Download,
-    Heart,
-    MessageCircle,
-    UserCircle,
-    X,
-} from 'lucide-react';
+import {ArrowLeft,BookOpen,Download,Heart,MessageCircle,UserCircle, X,} from 'lucide-react';
 import * as pdfjs from 'pdfjs-dist';
 import React, { useState } from 'react';
 import { route } from 'ziggy-js';
@@ -73,7 +65,7 @@ const PdfModal: React.FC<PdfModalProps> = ({
                         <X size={24} />
                     </button>
                 </div>
-                {/* PDF Viewer takes up remaining height */}
+                
                 <div className="h-[calc(100%-65px)] p-2">
                     <Worker
                         workerUrl={`https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`}
@@ -167,13 +159,11 @@ export default function PostDetails() {
         );
     }
 
-    //  TinyMCE description content
     const fixedDescription = module.description.replace(
         /src="(?:\/)?storage\/([^"]+)"/g,
         (match, path) => `src="/storage/${path}"`,
     );
 
-    // Date formatting functions
     const formatDate = (dateString: string) => {
         if (!dateString) return 'N/A';
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -200,7 +190,7 @@ export default function PostDetails() {
         return formatDate(dateString);
     };
 
-    //  RENDER LOGIC
+    // postdetail components
     return (
         <div className="min-h-screen bg-gray-50 font-sans antialiased transition-colors duration-300 dark:bg-gray-950">
             <Head title={module.title} />
@@ -245,9 +235,6 @@ export default function PostDetails() {
                                     />
                                     <span>{module.author_name}</span>
                                 </div>
-                                <span className="text-gray-300 dark:text-gray-600">
-                                    •
-                                </span>
                                 <time>
                                     {formatRelativeTime(module.published_at)}
                                 </time>
@@ -299,7 +286,7 @@ export default function PostDetails() {
                             <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
                                 {module.file_url && (
                                     <>
-                                        {/* Read Online Button: Opens the Modal */}
+                                        {/* Read Online  */}
                                         <button
                                             onClick={() =>
                                                 setPdfModalOpen(true)
@@ -310,7 +297,7 @@ export default function PostDetails() {
                                             Read Online
                                         </button>
 
-                                        {/* Download button remains */}
+                                        {/* Download button */}
                                         <a
                                             href={route('modules.read', {
                                                 module: module.id,
