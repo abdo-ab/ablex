@@ -6,6 +6,7 @@ use App\Models\Like;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ModuleController extends Controller
@@ -30,7 +31,19 @@ class ModuleController extends Controller
             })
             ->orderBy('id', 'desc')
             ->paginate(6)
-            ->withQueryString();
+            ->withQueryString()
+            ->through(function ($module) {
+                return [
+                    'id' => $module->id,
+                    'title' => $module->title,
+                    'slug' => $module->slug,
+                    'description' => $module->description,
+                    'thumbnail_url' => $module->thumbnail_url,
+                    'file_url' => $module->file_url,
+                    'author' => $module->author,
+                    'published_at' => $module->published_at,
+                ];
+            });
 
         return Inertia::render('Dashboard', [
             'modules' => $modules,
@@ -46,15 +59,28 @@ class ModuleController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        if (!$module->file_url) {
+        // Get the raw file path 
+        $filePath = $module->getAttributes()['file_url'];
+        
+        if (!$filePath) {
             abort(404, 'PDF file not found.');
         }
 
-        return response()->json([
-            'url' => $module->file_url,
+        // Check if file exists 
+        if (!Storage::disk('r2')->exists($filePath)) {
+            abort(404, 'PDF file not found in storage.');
+        }
+
+        // Stream the file 
+        return response()->stream(function () use ($filePath) {
+            $stream = Storage::disk('r2')->readStream($filePath);
+            fpassthru($stream);
+            fclose($stream);
+        }, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . basename($filePath) . '"',
         ]);
     }
-
     public function viewer(Module $module)
     {
         if (!Auth::check()) {

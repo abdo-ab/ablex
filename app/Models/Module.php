@@ -39,7 +39,7 @@ class Module extends Model
 
     // thumbnail url
 
-    public function getThumbnailUrlAttribute(?string $value): ?string
+   public function getThumbnailUrlAttribute(?string $value): ?string
     {
         if (! $value) {
             return null;
@@ -52,7 +52,7 @@ class Module extends Model
     }
 
     // file url
-    public function getFileUrlAttribute(?string $value): ?string
+ public function getFileUrlAttribute(?string $value): ?string
     {
         if (! $value) {
             return null;
@@ -64,18 +64,17 @@ class Module extends Model
         return $disk->url($value);
     }
 
-   protected $appends = [];
+   protected $appends = ['thumbnail_url', 'file_url'];
    public function comments() {
     return $this->morphMany(Comment::class, 'commentable')->latest();
 }
 
-// Polymorphic relationship for likes
+//  relationship for likes
     public function likes()
     {
         return $this->morphMany(Like::class, 'likeable');
     }
-
-    // Check if a user liked this module
+    
     public function likedByUser($userId)
     {
         return $this->likes()->where('user_id', $userId)->exists();
