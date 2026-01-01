@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\InteractionController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ModuleController;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\Features;
 
 // guest welcome page
@@ -26,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/modules/{module}/read', [ModuleController::class, 'read'])
         ->name('modules.read');
 
-    //  PDF Viewer page 
+    //  PDF Viewer page
     Route::get('/modules/{module}/viewer', [ModuleController::class, 'viewer'])
         ->name('modules.viewer');
         // like and comment
@@ -42,6 +44,10 @@ Route::get('/forbidden', function () {
 Route::fallback(function () {
     return inertia('Errors/NotFound');
 });
+
+
+
+
 
 
 
