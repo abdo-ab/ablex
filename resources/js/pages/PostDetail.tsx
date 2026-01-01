@@ -197,7 +197,7 @@ export default function PostDetails() {
 
             {/* PDF Viewer Modal */}
             <PdfModal
-                fileUrl={route('modules.read', { module: module.id })}
+                fileUrl={module.file_url}
                 title={module.title}
                 isOpen={pdfModalOpen}
                 onClose={() => setPdfModalOpen(false)}
