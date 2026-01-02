@@ -26,13 +26,8 @@ const mainNavItems: NavItem[] = [
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Contact us',
-        href: 'https://ablex.com/contact',
-        icon: PhoneCall,
-    },
-    {
         title: 'About us',
-        href: 'https://ablex.com/about',
+        href: 'https://ablex.test/',
         icon: BookOpen,
     },
 ];
