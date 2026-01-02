@@ -31,15 +31,14 @@ $app = Application::configure(basePath: dirname(__DIR__))
             'superAdmin' => SuperAdminMiddleware::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+  ->withExceptions(function (Exceptions $exceptions): void {
 
-        
-        //  render Blade error views
-        $exceptions->render(function (Throwable $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], 500);
-        });
+    $exceptions->render(function (Throwable $e) {
+        return new JsonResponse([
+            'error' => true,
+            'message' => $e->getMessage(),
+        ], 500);
+    });
 
     })
     ->create();
