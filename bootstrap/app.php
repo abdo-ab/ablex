@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Throwable;
 
 $app = Application::configure(basePath: dirname(__DIR__))
@@ -31,30 +32,29 @@ $app = Application::configure(basePath: dirname(__DIR__))
             'superAdmin' => SuperAdminMiddleware::class,
         ]);
     })
-  ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (Exceptions $exceptions): void {
 
-    $exceptions->render(function (Throwable $e) {
-        return new JsonResponse([
-            'error' => true,
-            'message' => $e->getMessage(),
-        ], 500);
-    });
+        //  SERVERLESS-SAFE ERROR HANDLING 
+        $exceptions->render(function (Throwable $e) {
+            return new JsonResponse([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
+        });
 
     })
     ->create();
 
 /*
 |--------------------------------------------------------------------------
-| Vercel / Serverless 
+| Vercel / Serverless filesystem fix
 |--------------------------------------------------------------------------
-| Vercel filesystem is read-only.
-| Laravel MUST use /tmp for storage (views, cache, sessions).
 */
 $app->useStoragePath('/tmp/storage');
+
+//  required directories exist
 @mkdir('/tmp/storage/framework/views', 0777, true);
 @mkdir('/tmp/storage/framework/cache', 0777, true);
 @mkdir('/tmp/storage/framework/sessions', 0777, true);
-
-
 
 return $app;
