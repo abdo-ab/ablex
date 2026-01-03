@@ -10,6 +10,12 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 
 export default function Register() {
+    const formProps = RegisteredUserController.store.form() as any;
+
+    if (formProps.inert === 'true') {
+        formProps.inert = true;
+    }
+
     return (
         <section className="bg-white dark:bg-gray-900">
             <Head title="Register" />
@@ -30,7 +36,7 @@ export default function Register() {
 
                     {/* Form */}
                     <Form
-                        {...RegisteredUserController.store.form()}
+                        {...formProps}
                         resetOnSuccess={['password', 'password_confirmation']}
                         disableWhileProcessing
                         className="flex flex-col gap-6"
