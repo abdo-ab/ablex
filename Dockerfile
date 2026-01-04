@@ -6,10 +6,16 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
     libpng-dev \
+    libicu-dev \
     libonig-dev \
     libxml2-dev \
     curl \
-    && docker-php-ext-install pdo pdo_mysql zip
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        zip \
+        bcmath \
+        intl
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -21,7 +27,7 @@ WORKDIR /var/www
 COPY . .
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 # Permissions
 RUN chmod -R 775 storage bootstrap/cache
