@@ -1,6 +1,6 @@
 FROM php:8.4-cli
 
-# System dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -15,38 +15,39 @@ RUN apt-get update && apt-get install -y \
         pdo_mysql \
         zip \
         bcmath \
-        intl
+        intl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Composer
+# Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# App directory
+# Set working directory
 WORKDIR /var/www
 
-# Copy files
+# Copy application files
 COPY . .
 
-# Install dependencies (verbose, no cache issues)
-RUN composer install \
-    --no-dev \
-    --no-interaction \
-    --prefer-dist \
-    --no-progress \
-    -vvv
-
-# Create Laravel required directories
-RUN mkdir -p storage/framework/sessions \
+# Create Laravel required directories BEFORE composer install
+RUN mkdir -p \
+    storage/framework/sessions \
     storage/framework/views \
     storage/framework/cache \
     storage/logs \
     bootstrap/cache
 
-# Permissions
+# Set permissions
 RUN chmod -R 775 storage bootstrap/cache
 
+# Install PHP dependencies
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader
 
-# Render port
+# Expose Render port
 EXPOSE 10000
 
-# Start app (ONLY ONE CMD)
+# Start Laravel (single command, Render-compatible)
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
