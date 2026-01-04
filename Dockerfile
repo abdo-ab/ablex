@@ -1,6 +1,6 @@
 FROM php:8.3-cli
 
-# Install system dependencies
+# System dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -17,23 +17,28 @@ RUN apt-get update && apt-get install -y \
         bcmath \
         intl
 
-# Install Composer
+# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# App directory
 WORKDIR /var/www
 
-# Copy project files
+# Copy files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+# Install dependencies (verbose, no cache issues)
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --no-progress \
+    -vvv
 
 # Permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Expose Render port
+# Render port
 EXPOSE 10000
 
-# Start Laravel
-CMD php artisan serve --host=0.0.0.0 --port=10000
+# Start app (ONLY ONE CMD)
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
