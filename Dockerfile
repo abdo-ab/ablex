@@ -34,8 +34,16 @@ RUN composer install \
     --no-progress \
     -vvv
 
+# Create Laravel required directories
+RUN mkdir -p storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/cache \
+    storage/logs \
+    bootstrap/cache
+
 # Permissions
 RUN chmod -R 775 storage bootstrap/cache
+
 
 # Render port
 EXPOSE 10000
