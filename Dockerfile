@@ -28,7 +28,7 @@ WORKDIR /var/www
 # Copy application files
 COPY . .
 
-# Create Laravel required directories BEFORE composer install
+# Create Laravel required directories
 RUN mkdir -p \
     storage/framework/sessions \
     storage/framework/views \
@@ -36,7 +36,11 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache
 
-# Set permissions
+# 🔑 CRITICAL RENDER FIX
+# Force Laravel /tmp storage to point to real storage
+RUN mkdir -p /tmp && ln -s /var/www/storage /tmp/storage
+
+# Permissions
 RUN chmod -R 775 storage bootstrap/cache
 
 # Install PHP dependencies
@@ -49,7 +53,7 @@ RUN composer install \
 # Expose Render port
 EXPOSE 10000
 
-# Start Laravel (single command, Render-compatible)
+# Start Laravel (clean runtime caches)
 CMD php artisan config:clear && \
     php artisan view:clear && \
     php artisan route:clear && \
