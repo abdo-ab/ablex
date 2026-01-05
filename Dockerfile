@@ -1,6 +1,6 @@
 FROM php:8.4-cli
 
-# Install system dependencies
+# System dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -19,42 +19,30 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
+# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# App directory
 WORKDIR /var/www
 
-# Copy application files
+# Copy app
 COPY . .
 
-# Create Laravel required directories
-RUN mkdir -p \
-    storage/framework/sessions \
-    storage/framework/views \
-    storage/framework/cache \
-    storage/logs \
-    bootstrap/cache
-
-# 🔑 CRITICAL RENDER FIX
-# Force Laravel /tmp storage to point to real storage
-RUN mkdir -p /tmp && ln -s /var/www/storage /tmp/storage
-
-# Permissions
-RUN chmod -R 775 storage bootstrap/cache
-
-# Install PHP dependencies
+# Install deps
 RUN composer install \
     --no-dev \
     --no-interaction \
     --prefer-dist \
     --optimize-autoloader
 
-# Expose Render port
+# Expose port
 EXPOSE 10000
 
-# Start Laravel (clean runtime caches)
-CMD php artisan config:clear && \
-    php artisan view:clear && \
-    php artisan route:clear && \
-    php artisan serve --host=0.0.0.0 --port=10000
+# Runtime fix (THIS IS THE KEY)
+CMD mkdir -p /tmp/storage/framework/sessions \
+    /tmp/storage/framework/views \
+    /tmp/storage/framework/cache \
+    /tmp/storage/logs \
+ && chmod -R 777 /tmp/storage \
+ && php artisan config:clear \
+ && php artisan serve --host=0.0.0.0 --port=10000
