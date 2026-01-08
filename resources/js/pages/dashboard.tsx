@@ -40,7 +40,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard() {
+export default function dashboard() {
     const { props } = usePage<PageProps>();
 
     const searchFromServer = props.filters?.search ?? '';
