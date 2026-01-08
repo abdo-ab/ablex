@@ -23,7 +23,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleAppearance::class,
             HandleInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
+            AddLinkHeadersForPreloadedAssets::class, 
         ]);
 
         $middleware->alias([
@@ -42,6 +42,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
 |--------------------------------------------------------------------------
 |
 */
-$app->useStoragePath('/tmp/storage');
+if (getenv('VERCEL')) {
+    $app->useStoragePath('/tmp/storage');
+}
 
 return $app;
