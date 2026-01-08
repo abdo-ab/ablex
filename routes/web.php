@@ -10,7 +10,7 @@ use Laravel\Fortify\Features;
 
 // guest welcome page
  Route::get('/', function () {
-    return Inertia::render('welcome', [
+    return Inertia::render('Welcome', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');
@@ -38,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 // forbidden page
 Route::get('/forbidden', function () {
-    return Inertia::render('forbidden');
+    return Inertia::render('Forbidden');
 })->name('forbidden');
 // 404 page
 Route::fallback(function () {
