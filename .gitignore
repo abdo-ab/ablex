@@ -17,7 +17,6 @@
 !/storage/framework/**
 !/storage/framework/**/.gitignore
 /node_modules
-/public/build
 /public/hot
 /public/storage
 /resources/js/actions
