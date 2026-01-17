@@ -1,4 +1,4 @@
-import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
+import { qrCode, secretKey } from '@/routes/two-factor';
 import { useCallback, useMemo, useState } from 'react';
 
 interface TwoFactorSetupData {
@@ -27,7 +27,6 @@ const fetchJson = async <T>(url: string): Promise<T> => {
 export const useTwoFactorAuth = () => {
     const [qrCodeSvg, setQrCodeSvg] = useState<string | null>(null);
     const [manualSetupKey, setManualSetupKey] = useState<string | null>(null);
-    const [recoveryCodesList, setRecoveryCodesList] = useState<string[]>([]);
     const [errors, setErrors] = useState<string[]>([]);
 
     const hasSetupData = useMemo<boolean>(
@@ -67,16 +66,7 @@ export const useTwoFactorAuth = () => {
         clearErrors();
     }, [clearErrors]);
 
-    const fetchRecoveryCodes = useCallback(async (): Promise<void> => {
-        try {
-            clearErrors();
-            const codes = await fetchJson<string[]>(recoveryCodes.url());
-            setRecoveryCodesList(codes);
-        } catch {
-            setErrors((prev) => [...prev, 'Failed to fetch recovery codes']);
-            setRecoveryCodesList([]);
-        }
-    }, [clearErrors]);
+
 
     const fetchSetupData = useCallback(async (): Promise<void> => {
         try {
@@ -91,7 +81,6 @@ export const useTwoFactorAuth = () => {
     return {
         qrCodeSvg,
         manualSetupKey,
-        recoveryCodesList,
         hasSetupData,
         errors,
         clearErrors,
@@ -99,6 +88,5 @@ export const useTwoFactorAuth = () => {
         fetchQrCode,
         fetchSetupKey,
         fetchSetupData,
-        fetchRecoveryCodes,
     };
 };
