@@ -10,7 +10,7 @@ use Laravel\Fortify\Features;
 
 // guest welcome page
  Route::get('/', function () {
-    return Inertia::render('welcome', [
+    return Inertia::render('Welcome', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');
@@ -20,7 +20,7 @@ use Laravel\Fortify\Features;
 Route::middleware(['auth', 'verified'])->group(function () {
 
 
-    Route::get('dashboard', [ModuleController::class, 'index'])
+    Route::get('Dashboard', [ModuleController::class, 'index'])
         ->name('dashboard');
     Route::get('modules/{slug}', [ModuleController::class, 'show'])
         ->name('modules.show');
@@ -44,6 +44,7 @@ Route::get('/forbidden', function () {
 Route::fallback(function () {
     return inertia('Errors/NotFound');
 });
+
 
 
 
