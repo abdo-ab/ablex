@@ -10,7 +10,7 @@ use Laravel\Fortify\Features;
 
 // guest welcome page
  Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');

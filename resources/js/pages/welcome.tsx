@@ -4,7 +4,7 @@ import { ArrowRight, BellPlus, Lock, Menu, TimerIcon, X } from 'lucide-react';
 import { useState } from 'react';
 import { route } from 'ziggy-js';
 
-export default function Welcome() {
+export default function welcome() {
     const { auth } = usePage<SharedData>().props;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
