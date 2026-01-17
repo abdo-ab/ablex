@@ -20,7 +20,7 @@ use Laravel\Fortify\Features;
 Route::middleware(['auth', 'verified'])->group(function () {
 
 
-    Route::get('Dashboard', [ModuleController::class, 'index'])
+    Route::get('dashboard', [ModuleController::class, 'index'])
         ->name('dashboard');
     Route::get('modules/{slug}', [ModuleController::class, 'show'])
         ->name('modules.show');
