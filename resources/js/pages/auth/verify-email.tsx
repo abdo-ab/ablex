@@ -5,20 +5,22 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, useForm } from '@inertiajs/react';
 
 export default function VerifyEmail({ status }: { status?: string }) {
+    const logoutForm = useForm({});
+
     return (
         <AuthLayout
-            title="Verify email"
-            description="Please verify your email address by clicking on the link we just emailed to you."
+            title="Verify your email"
+            description="We’ve sent a verification link to your email. You need to verify it before accessing your dashboard. 
+                Check your inbox and click the link we sent you."
         >
             <Head title="Email verification" />
 
             {status === 'verification-link-sent' && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                <div className="mb-4 rounded-md bg-green-50 p-3 text-center text-sm font-medium text-green-700">
+                    A new verification link has been sent to your email.
                 </div>
             )}
 
@@ -29,13 +31,13 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             {processing && <Spinner />}
                             Resend verification email
                         </Button>
-
-                        <TextLink
-                            href={logout()}
-                            className="mx-auto block text-sm"
+                        <button
+                            type="button"
+                            onClick={() => logoutForm.post(logout())}
+                            className="mx-auto block text-xs text-muted-foreground hover:underline"
                         >
-                            Log out
-                        </TextLink>
+                            Log out instead
+                        </button>
                     </>
                 )}
             </Form>

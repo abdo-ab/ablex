@@ -33,13 +33,16 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(RegisterResponseContract::class, function () {
-            return new class implements RegisterResponseContract {
-                public function toResponse($request)
-                {
-                    return redirect()->intended(config('fortify.home'));
-                }
-            };
-        });
+    return new class implements RegisterResponseContract {
+        public function toResponse($request)
+        {
+            return redirect()->route('verification.notice');
+        }
+    };
+});
+
+
+       
     }
 
     /**
