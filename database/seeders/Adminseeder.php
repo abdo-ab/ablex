@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Hash;
 class Adminseeder extends Seeder
 {
     /**
@@ -15,14 +15,16 @@ class Adminseeder extends Seeder
     {
         User::factory()->create([
             'name' => 'mameadmin',
-            'email' => 'mameadmin@gmail.com',
-            'password' => '12345678',
+            'email' => 'awashdev@gmail.com',
+            'email_verified_at' => now(),
+            'password' =>Hash::make('12345678'),
             'Role' => 'admin',
         ]);
         User::factory()->create([
             'name' => 'devab',
-            'email' => 'devab@gmail.com',
-            'password' => '12345678',
+            'email' => 'devabdo@gmail.com',
+            'email_verified_at' => now(),
+            'password' =>Hash::make('12345678'),
             'Role' => 'superAdmin',
         ]);
     }
