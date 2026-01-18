@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Filament\Resources\Modules;
+namespace App\Filament\SuperAdmin\Resources\Modules;
 
-use App\Filament\Resources\Modules\Pages\CreateModule;
-use App\Filament\Resources\Modules\Pages\EditModule;
-use App\Filament\Resources\Modules\Pages\ListModules;
-use App\Filament\Resources\Modules\Schemas\ModuleForm;
-use App\Filament\Resources\Modules\Tables\ModulesTable;
+use App\Filament\SuperAdmin\Resources\Modules\Pages\CreateModule;
+use App\Filament\SuperAdmin\Resources\Modules\Pages\EditModule;
+use App\Filament\SuperAdmin\Resources\Modules\Pages\ListModules;
+use App\Filament\SuperAdmin\Resources\Modules\Schemas\ModuleForm;
+use App\Filament\SuperAdmin\Resources\Modules\Tables\ModulesTable;
 use App\Models\Module;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class ModuleResource extends Resource
 {
     protected static ?string $model = Module::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema
     {

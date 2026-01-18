@@ -117,7 +117,7 @@ export default function welcome() {
                                     </Link>
                                     <Link
                                         href={route('register')}
-                                        className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-lg shadow-indigo-500/25 transition-all hover:bg-indigo-500 hover:shadow-indigo-500/40"
+                                        className="rounded-full bg-amber-600 px-5 py-2 text-sm font-medium text-white shadow-lg shadow-amber    -500/25 transition-all hover:bg-amber-500 hover:shadow-amber-500/40"
                                     >
                                         Get Started
                                     </Link>
@@ -126,7 +126,9 @@ export default function welcome() {
                         </div>
                     </div>
 
-                    {/* Mobile Menu Button */}
+                    
+
+                {/* Mobile Menu */}
                     <button
                         onClick={toggleMenu}
                         className="p-2 text-slate-400 hover:text-white lg:hidden"
@@ -135,7 +137,6 @@ export default function welcome() {
                     </button>
                 </div>
 
-                {/* Mobile Menu */}
                 {isMenuOpen && (
                     <div className="absolute top-full left-0 w-full border-b border-white/5 bg-slate-950 px-6 py-6 shadow-2xl lg:hidden">
                         <div className="flex flex-col gap-4">
@@ -173,7 +174,7 @@ export default function welcome() {
                                     </Link>
                                     <Link
                                         href={route('register')}
-                                        className="rounded-lg bg-indigo-600 py-2.5 text-center font-medium text-white"
+                                        className="rounded-lg bg-amber-600 py-2.5 text-center font-medium text-white"
                                     >
                                         Register
                                     </Link>
@@ -204,7 +205,7 @@ export default function welcome() {
                     <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <Link
                             href={route('register')}
-                            className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-indigo-600 px-8 font-medium text-white shadow-lg shadow-indigo-500/30 transition-all hover:scale-105 hover:bg-indigo-500 hover:shadow-indigo-500/50"
+                            className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-amber-600 px-8 font-medium text-white shadow-lg shadow-amber-500/30 transition-all hover:scale-105 hover:bg-amber-500 hover:shadow-amber-500/50"
                         >
                             <span className="mr-2">Start Learning Free</span>
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

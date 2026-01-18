@@ -69,8 +69,6 @@ export default function dashboard() {
 
             <section className="min-h-[80vh] rounded-xl bg-white py-6 shadow-xl sm:py-10 dark:border dark:border-gray-800 dark:bg-gray-950 dark:shadow-none">
                 <div className="relative z-20 mx-auto max-w-screen-xl px-4">
-
-                    {/* Page Title + Description */}
                     <div className="mb-6 max-w-xl">
                         <h1 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
                             Explore Learning Modules
@@ -109,43 +107,47 @@ export default function dashboard() {
                         </div>
                     ) : (
                         <>
-                            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                                 {modules.map((module) => (
                                     <Link
-                                        key={module.id}
-                                        href={route('modules.show', {
-                                            slug: module.slug,
-                                        })}
-                                        className="group block transform overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
-                                    >
-                                        <div className="relative h-44 overflow-hidden">
-                                            <img
-                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                                src={module.thumbnail_url}
-                                                alt={module.title}
-                                            />
-                                        </div>
-                                        <div className="p-4 sm:p-5">
-                                            <h2 className="line-clamp-2 text-lg font-bold text-gray-900 dark:text-white">
-                                                {module.title}
-                                            </h2>
-                                            <div
-                                                className="mt-2 line-clamp-3 text-sm text-gray-600 dark:text-gray-400"
-                                                dangerouslySetInnerHTML={{
-                                                    __html: module.description,
-                                                }}
-                                            />
+    key={module.id}
+    href={route('modules.show', { slug: module.slug })}
+    className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border dark:border-gray-800 dark:bg-gray-900"
+>
+    {/* Thumbnail */}
+    <div className="relative h-52 w-full overflow-hidden">
+        <img
+            src={module.thumbnail_url}
+            alt={module.title}
+            className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+    </div>
 
-                                            <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3 text-xs font-medium text-gray-500 dark:border-gray-800 dark:text-gray-400">
-                                                <span className="truncate">
-                                                    {module.author?.name ?? 'Unknown'}
-                                                </span>
-                                                <span className="text-indigo-600 dark:text-indigo-400">
-                                                    View Module
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </Link>
+    {/* Content */}
+    <div className="flex flex-1 flex-col p-5">
+        <h2 className="line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-indigo-600 dark:text-white dark:group-hover:text-indigo-400">
+            {module.title}
+        </h2>
+
+        <div
+            className="mt-3 line-clamp-3 text-sm leading-relaxed text-gray-600 dark:text-gray-400"
+            dangerouslySetInnerHTML={{ __html: module.description }}
+        />
+
+        {/* Footer */}
+        <div className="mt-auto flex items-center justify-between pt-5 text-sm">
+            <span className="truncate text-gray-500 dark:text-gray-400">
+                {module.author?.name ?? 'Unknown'}
+            </span>
+
+            <span className="font-semibold text-amber-500 transition group-hover:translate-x-1 dark:text-amber-400">
+                View Module →
+            </span>
+        </div>
+    </div>
+</Link>
+
                                 ))}
                             </div>
 
