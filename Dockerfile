@@ -52,4 +52,7 @@ CMD mkdir -p /tmp/storage/framework/sessions \
     /tmp/storage/logs \
  && chmod -R 777 /tmp/storage \
  && php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan cache:clear \
+ && php artisan view:clear \
  && php artisan serve --host=0.0.0.0 --port=10000
