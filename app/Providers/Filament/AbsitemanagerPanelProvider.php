@@ -49,7 +49,7 @@ class AbsitemanagerPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-               ProtectFilamentAdmin::class,
+              // ProtectFilamentAdmin::class,
                 Authenticate::class
 
             ]);

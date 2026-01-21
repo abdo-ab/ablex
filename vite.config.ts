@@ -24,6 +24,11 @@ export default defineConfig({
     esbuild: {
         jsx: 'automatic',
     },
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+        },
+    },
     build: {
         outDir: 'public/build',
     },
