@@ -38,7 +38,7 @@ class SuperAdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->widgets([
-                TotalStatus::class, 
+                TotalStatus::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -52,7 +52,7 @@ class SuperAdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-              //  SuperAdminMiddleware::class,
+                SuperAdminMiddleware::class,
                 Authenticate::class
             ]);
     }

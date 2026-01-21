@@ -69,65 +69,66 @@ export default function welcome() {
             </div>
 
             {/* Navbar */}
-            {/* Navbar */}
-            <nav className="fixed top-0 z-50 w-full transition-all duration-300 lg:top-6 lg:left-0 lg:right-0 lg:mx-auto lg:max-w-4xl">
-                <div className="relative flex items-center justify-between border-b border-white/5 bg-slate-950/70 px-6 py-4 backdrop-blur-xl lg:rounded-full lg:border lg:border-white/10 lg:bg-[#121217]/80 lg:px-6 lg:py-2.5 lg:shadow-2xl lg:shadow-black/50 lg:backdrop-blur-md">
+            <nav className="fixed top-0 z-50 w-full border-b border-white/5 bg-slate-950/70 backdrop-blur-xl">
+                <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
                     <Link href="/" className="group flex items-center gap-2">
                         <span className="text-xl font-bold tracking-tight text-white">
                             Ablex
                         </span>
                     </Link>
 
-                    {/* Desktop Menu  */}
-                    <div className="absolute left-1/2 hidden -translate-x-1/2 transform items-center gap-8 lg:flex">
-                        <a
-                            href="#home"
-                            className="text-[15px] font-medium text-slate-300 transition-colors hover:text-white"
-                        >
-                            Home
-                        </a>
-                        <a
-                            href="#teams"
-                            className="text-[15px] font-medium text-slate-300 transition-colors hover:text-white"
-                        >
-                            Teams
-                        </a>
-                        <a
-                            href="#features"
-                            className="text-[15px] font-medium text-slate-300 transition-colors hover:text-white"
-                        >
-                            Features
-                        </a>
-                    </div>
-
-                    {/* Right Side - Dashboard/Actions */}
-                    <div className="hidden items-center gap-4 lg:flex">
-                        {auth.user ? (
-                            <Link
-                                href={route('dashboard')}
-                                className="rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-white transition-all hover:bg-white/10 hover:shadow-lg hover:shadow-indigo-500/10"
+                    {/* Desktop Menu */}
+                    <div className="hidden items-center gap-8 lg:flex">
+                        <div className="flex gap-6 text-sm font-medium text-slate-400">
+                            <a
+                                href="/"
+                                className="transition-colors hover:text-white"
                             >
-                                Dashboard
-                            </Link>
-                        ) : (
-                            <>
+                                Home
+                            </a>
+                            <a
+                                href="#teams"
+                                className="transition-colors hover:text-white"
+                            >
+                                Teams
+                            </a>
+                            <a
+                                href="#features"
+                                className="transition-colors hover:text-white"
+                            >
+                                Features
+                            </a>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            {auth.user ? (
                                 <Link
-                                    href={route('login')}
-                                    className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
+                                    href={route('dashboard')}
+                                    className="rounded-full border border-slate-700 bg-slate-800 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-700"
                                 >
-                                    Log in
+                                    Dashboard
                                 </Link>
-                                <Link
-                                    href={route('register')}
-                                    className="rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-white transition-all hover:bg-white/10 hover:shadow-lg hover:shadow-indigo-500/10"
-                                >
-                                    Get Started
-                                </Link>
-                            </>
-                        )}
+                            ) : (
+                                <>
+                                    <Link
+                                        href={route('login')}
+                                        className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
+                                    >
+                                        Log in
+                                    </Link>
+                                    <Link
+                                        href={route('register')}
+                                        className="rounded-full bg-amber-600 px-5 py-2 text-sm font-medium text-white shadow-lg shadow-amber    -500/25 transition-all hover:bg-amber-500 hover:shadow-amber-500/40"
+                                    >
+                                        Get Started
+                                    </Link>
+                                </>
+                            )}
+                        </div>
                     </div>
 
-                    {/* Mobile Menu Toggle */}
+                    
+
+                {/* Mobile Menu */}
                     <button
                         onClick={toggleMenu}
                         className="p-2 text-slate-400 hover:text-white lg:hidden"
@@ -136,11 +137,10 @@ export default function welcome() {
                     </button>
                 </div>
 
-                {/* Mobile Menu Dropdown */}
                 {isMenuOpen && (
                     <div className="absolute top-full left-0 w-full border-b border-white/5 bg-slate-950 px-6 py-6 shadow-2xl lg:hidden">
                         <div className="flex flex-col gap-4">
-                            <a href="#home" onClick={() => setIsMenuOpen(false)}>
+                            <a href="/" onClick={() => setIsMenuOpen(false)}>
                                 Home
                             </a>
                             <a
@@ -157,10 +157,10 @@ export default function welcome() {
                             >
                                 Features
                             </a>
-                             {auth.user ? (
+                            {auth.user ? (
                                 <Link
                                     href={route('dashboard')}
-                                    className="rounded-lg bg-amber-600 py-3 text-center font-medium text-white"
+                                    className="rounded-lg bg-indigo-600 py-3 text-center font-medium text-white"
                                 >
                                     Dashboard
                                 </Link>
@@ -176,7 +176,7 @@ export default function welcome() {
                                         href={route('register')}
                                         className="rounded-lg bg-amber-600 py-2.5 text-center font-medium text-white"
                                     >
-                                        Get Started
+                                        Register
                                     </Link>
                                 </div>
                             )}
