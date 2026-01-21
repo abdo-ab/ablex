@@ -9,8 +9,8 @@ use App\Filament\SuperAdmin\Resources\Modules\Schemas\ModuleForm;
 use App\Filament\SuperAdmin\Resources\Modules\Tables\ModulesTable;
 use App\Models\Module;
 use BackedEnum;
-use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
 use Filament\Tables\Table;
 
 class ModuleResource extends Resource
@@ -44,5 +44,6 @@ class ModuleResource extends Resource
             'edit' => EditModule::route('/{record}/edit'),
         ];
     }
-    
+
 }
+
