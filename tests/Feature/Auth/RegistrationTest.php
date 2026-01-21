@@ -15,5 +15,5 @@ test('new users can register', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect('/email/verify');
+    $response->assertRedirect(route('dashboard', absolute: false));
 });
