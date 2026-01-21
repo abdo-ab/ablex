@@ -32,7 +32,9 @@ class AbsitemanagerPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Green,
             ])
-            ->discoverResources(in: app_path('Filament/Absitemanager/Resources'), for: 'App\Filament\Resources')
+            ->resources([
+                ModuleResource::class,
+            ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
@@ -49,7 +51,7 @@ class AbsitemanagerPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                //Authenticate::class
+                Authenticate::class,
             ]);
     }
 }

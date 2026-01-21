@@ -2,8 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\SuperAdmin\Resources\Modules\ModuleResource;
+use App\Filament\SuperAdmin\Resources\Users\UserResource;
 use App\Filament\Widgets\TotalStatus;
-use App\Http\Middleware\SuperAdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -32,7 +33,10 @@ class SuperAdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Green,
             ])
-           ->discoverResources(in: app_path('Filament/superAdmin/Resources'), for: 'App\Filament\SuperAdmin\Resources')
+            ->resources([
+                UserResource::class,
+                ModuleResource::class,
+            ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
@@ -52,7 +56,7 @@ class SuperAdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                // Authenticate::class
+                Authenticate::class,
             ]);
     }
 }
