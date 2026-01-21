@@ -27,7 +27,7 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'About us',
-        href: 'https://ablex.com.et',
+        href: 'https://ablex.pro.et',
         icon: BookOpen,
     },
 ];

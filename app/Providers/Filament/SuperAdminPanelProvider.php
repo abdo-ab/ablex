@@ -52,8 +52,9 @@ class SuperAdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-              //  SuperAdminMiddleware::class,
-                Authenticate::class
+              // ProtectFilamentAdmin::class,
+              //  Authenticate::class
+
             ]);
     }
 }
