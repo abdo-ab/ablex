@@ -69,8 +69,8 @@ export default function welcome() {
             </div>
 
             {/* Navbar */}
-            <nav className="fixed top-0 z-50 w-full border-b border-white/5 bg-slate-950/70 backdrop-blur-xl">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <nav className="fixed top-0 z-50 w-full border-b border-white/5 bg-slate-950/70 backdrop-blur-xl lg:left-1/2 lg:top-6 lg:w-fit lg:max-w-5xl lg:-translate-x-1/2 lg:rounded-full lg:border lg:border-white/10 lg:bg-slate-900/80 lg:shadow-2xl lg:shadow-indigo-500/10">
+                <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:gap-12 lg:px-8 lg:py-3">
                     <Link href="/" className="group flex items-center gap-2">
                         <span className="text-xl font-bold tracking-tight text-white">
                             Ablex
@@ -81,7 +81,7 @@ export default function welcome() {
                     <div className="hidden items-center gap-8 lg:flex">
                         <div className="flex gap-6 text-sm font-medium text-slate-400">
                             <a
-                                href="/"
+                                href="#home"
                                 className="transition-colors hover:text-white"
                             >
                                 Home
@@ -99,35 +99,35 @@ export default function welcome() {
                                 Features
                             </a>
                         </div>
-                        <div className="flex items-center gap-4">
-                            {auth.user ? (
+                    </div>
+
+                    <div className="hidden items-center gap-4 lg:flex">
+                        {auth.user ? (
+                            <Link
+                                href={route('dashboard')}
+                                className="rounded-full border border-slate-700 bg-slate-800 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-700"
+                            >
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <>
                                 <Link
-                                    href={route('dashboard')}
-                                    className="rounded-full border border-slate-700 bg-slate-800 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-700"
+                                    href={route('login')}
+                                    className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
                                 >
-                                    Dashboard
+                                    Log in
                                 </Link>
-                            ) : (
-                                <>
-                                    <Link
-                                        href={route('login')}
-                                        className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
-                                    >
-                                        Log in
-                                    </Link>
-                                    <Link
-                                        href={route('register')}
-                                        className="rounded-full bg-amber-600 px-5 py-2 text-sm font-medium text-white shadow-lg shadow-amber    -500/25 transition-all hover:bg-amber-500 hover:shadow-amber-500/40"
-                                    >
-                                        Get Started
-                                    </Link>
-                                </>
-                            )}
-                        </div>
+                                <Link
+                                    href={route('register')}
+                                    className="rounded-full bg-amber-600 px-5 py-2 text-sm font-medium text-white shadow-lg shadow-amber-500/25 transition-all hover:bg-amber-500 hover:shadow-amber-500/40"
+                                >
+                                    Get Started
+                                </Link>
+                            </>
+                        )}
                     </div>
 
                     
-
                 {/* Mobile Menu */}
                     <button
                         onClick={toggleMenu}
@@ -140,7 +140,7 @@ export default function welcome() {
                 {isMenuOpen && (
                     <div className="absolute top-full left-0 w-full border-b border-white/5 bg-slate-950 px-6 py-6 shadow-2xl lg:hidden">
                         <div className="flex flex-col gap-4">
-                            <a href="/" onClick={() => setIsMenuOpen(false)}>
+                            <a href="#home" onClick={() => setIsMenuOpen(false)}>
                                 Home
                             </a>
                             <a
@@ -313,7 +313,7 @@ export default function welcome() {
                             to { transform: translateX(-33.33%); }
                         }
                         .animate-infinite-scroll {
-                            animation: infinite-scroll 30s linear infinite;
+                            animation: infinite-scroll 20s linear infinite;
                         }
                     `}</style>
                 </div>
