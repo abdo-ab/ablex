@@ -29,6 +29,7 @@ interface ModuleType {
 }
 interface PageProps extends InertiaPageProps {
     module: ModuleType;
+    recentModules: ModuleType[];
     auth: { user: { id: number; name: string } | null };
     likeCount?: number;
     isLiked: boolean;
@@ -86,6 +87,7 @@ export default function PostDetails() {
     const { props } = usePage<PageProps>();
     const {
         module,
+        recentModules,
         auth,
         likeCount: initialLikeCount,
         isLiked: initialIsLiked,
@@ -98,7 +100,7 @@ export default function PostDetails() {
     );
     const [isLiked, setIsLiked] = useState(initialIsLiked ?? false);
 
-    // Form hook for the comment section
+    //  comment section
     const { data, setData, post, processing, reset } = useForm({
         body: '',
     });
@@ -216,198 +218,243 @@ export default function PostDetails() {
             </header>
 
             <main className="container mx-auto px-4 py-12">
-                <article className="mx-auto max-w-4xl overflow-hidden rounded-xl bg-white shadow-2xl dark:border dark:border-gray-800 dark:bg-gray-900 dark:shadow-none">
-                    <div className="relative aspect-video w-full overflow-hidden">
-                        <img
-                            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                            src={module.thumbnail_url}
-                            alt={module.title}
-                        />
-                    </div>
-
-                    <div className="p-6 sm:p-10 lg:p-12">
-                        <div className="mb-8 border-b border-gray-100 pb-6 dark:border-gray-800">
-                            <div className="mb-2 flex items-center gap-3 text-sm font-medium text-gray-500 dark:text-gray-400">
-                                <div className="flex items-center gap-1">
-                                    <UserCircle
-                                        size={16}
-                                        className="text-indigo-500"
-                                    />
-                                    <span>{module.author_name}</span>
-                                </div>
-                                <time>
-                                    {formatRelativeTime(module.published_at)}
-                                </time>
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+                    {/* Main Content Column */}
+                    <div className="lg:col-span-2">
+                        <article className="mx-auto overflow-hidden rounded-xl bg-white shadow-2xl dark:border dark:border-gray-800 dark:bg-gray-900 dark:shadow-none">
+                            <div className="relative aspect-video w-full overflow-hidden">
+                                <img
+                                    className="h-full w-full object-cover"
+                                    src={module.thumbnail_url}
+                                    alt={module.title}
+                                />
                             </div>
 
-                            <h1 className="text-3xl leading-tight font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">
-                                {module.title}
-                            </h1>
-                        </div>
+                            <div className="p-6 sm:p-10 lg:p-12">
+                                <div className="mb-8 border-b border-gray-100 pb-6 dark:border-gray-800">
+                                    <div className="mb-2 flex items-center gap-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                                        <div className="flex items-center gap-1">
+                                            <UserCircle
+                                                size={16}
+                                                className="text-amber-500"
+                                            />
+                                            <span>{module.author_name}</span>
+                                        </div>
+                                        <time>
+                                            {formatRelativeTime(module.published_at)}
+                                        </time>
+                                    </div>
 
-                        {/* Description content  */}
-                        <div
-                            className="prose dark:prose-invert prose-lg sm:prose-xl max-w-none space-y-6 text-gray-700 dark:text-gray-300"
-                            dangerouslySetInnerHTML={{
-                                __html: fixedDescription,
-                            }}
-                        />
-
-                        <div className="mt-10 flex flex-col items-center justify-between gap-6 border-t border-gray-100 pt-8 sm:flex-row dark:border-gray-800">
-                            <div className="flex items-center gap-6">
-                                {/* Likes Button */}
-                                <button
-                                    onClick={toggleLike}
-                                    className={`flex items-center gap-2 rounded-full p-3 text-sm font-semibold transition-colors hover:scale-[1.05] disabled:cursor-not-allowed disabled:opacity-50 ${
-                                        isLiked
-                                            ? 'bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-400'
-                                            : 'bg-red-50 text-red-600 hover:bg-red-100 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700'
-                                    }`}
-                                >
-                                    <Heart
-                                        size={20}
-                                        className={
-                                            isLiked
-                                                ? 'fill-red-600 dark:fill-red-400'
-                                                : 'fill-none'
-                                        }
-                                    />
-                                    <span>{likeCount} Likes</span>
-                                </button>
-
-                                <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                                    <MessageCircle size={20} />
-                                    <span className="text-sm font-medium">
-                                        {safeComments.length} Comments
-                                    </span>
+                                    <h1 className="text-3xl leading-tight font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">
+                                        {module.title}
+                                    </h1>
                                 </div>
-                            </div>
 
-                            <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
-                                {module.file_url && (
-                                    <>
-                                        {/* Read Online  */}
+                                {/* Description content  */}
+                                <div
+                                    className="prose dark:prose-invert prose-lg sm:prose-xl max-w-none space-y-6 text-gray-700 dark:text-gray-300"
+                                    dangerouslySetInnerHTML={{
+                                        __html: fixedDescription,
+                                    }}
+                                />
+
+                                <div className="mt-10 flex flex-col items-center justify-between gap-6 border-t border-gray-100 pt-8 sm:flex-row dark:border-gray-800">
+                                    <div className="flex items-center gap-6">
+                                        {/* Likes Button */}
                                         <button
-                                            onClick={() =>
-                                                setPdfModalOpen(true)
-                                            }
-                                            className="flex w-full transform items-center justify-center gap-3 rounded-full bg-indigo-600 px-6 py-3 text-base font-bold text-white shadow-lg shadow-indigo-500/50 transition-all duration-300 hover:scale-[1.02] hover:bg-indigo-700 sm:w-auto"
+                                            onClick={toggleLike}
+                                            className={`flex items-center gap-2 rounded-full p-3 text-sm font-semibold transition-colors hover:scale-[1.05] disabled:cursor-not-allowed disabled:opacity-50 ${
+                                                isLiked
+                                                    ? 'bg-red-100 text-red-600 dark:bg-red-900/50 dark:text-red-400'
+                                                    : 'bg-red-50 text-red-600 hover:bg-red-100 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700'
+                                            }`}
                                         >
-                                            <BookOpen size={20} />
-                                            Read Online
+                                            <Heart
+                                                size={20}
+                                                className={
+                                                    isLiked
+                                                        ? 'fill-red-600 dark:fill-red-400'
+                                                        : 'fill-none'
+                                                }
+                                            />
+                                            <span>{likeCount} Likes</span>
                                         </button>
 
-                                        {/* Download button */}
-                                        <a
-                                            href={route('modules.read', {
-                                                module: module.id,
-                                            })}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            download
-                                            className="flex w-full transform items-center justify-center gap-3 rounded-full border border-indigo-600 bg-transparent px-6 py-3 text-base font-bold text-indigo-600 transition-all duration-300 hover:scale-[1.02] hover:bg-indigo-50 sm:w-auto dark:text-indigo-400 dark:hover:bg-gray-800"
-                                        >
-                                            <Download size={20} />
-                                            Download
-                                        </a>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                {/* COMMENTS SECTION */}
-                <section className="mx-auto mt-12 max-w-4xl">
-                    <h2 className="mb-8 text-xl font-bold text-gray-900 dark:text-white">
-                        {safeComments.length} Comments
-                    </h2>
-
-                    {/* Comment Form */}
-                    {auth.user ? (
-                        <div className="mb-10 flex gap-4">
-                            <div className="flex-shrink-0">
-                                {auth.user.name ? (
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
-                                        {auth.user.name.charAt(0)}
+                                        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                                            <MessageCircle size={20} />
+                                            <span className="text-sm font-medium">
+                                                {safeComments.length} Comments
+                                            </span>
+                                        </div>
                                     </div>
-                                ) : (
-                                    <UserCircle
-                                        size={40}
-                                        className="text-gray-400"
-                                    />
-                                )}
-                            </div>
-                            <form className="w-full" onSubmit={submit}>
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        value={data.body}
-                                        onChange={(e) =>
-                                            setData('body', e.target.value)
-                                        }
-                                        className="w-full border-b border-gray-300 bg-transparent py-2 text-gray-900 placeholder-gray-500 transition-colors focus:border-indigo-600 focus:outline-none focus:ring-0 dark:border-gray-700 dark:text-white dark:focus:border-indigo-400"
-                                        placeholder="Add a comment..."
-                                        required
-                                    />
-                                </div>
-                                <div className={`mt-3 flex justify-end gap-2 transition-opacity duration-200 ${data.body.trim().length > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                                    <button
-                                        type="button"
-                                        onClick={() => reset('body')}
-                                        className="rounded-full px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        disabled={processing || data.body.trim().length === 0}
-                                        className="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:bg-gray-300 dark:disabled:bg-gray-700"
-                                    >
-                                        Comment
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    ) : (
-                        <div className="mb-10 rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-900/50">
-                            <p className="text-gray-600 dark:text-gray-400">
-                                <a href={route('login')} className="font-semibold text-indigo-600 hover:underline dark:text-indigo-400">Log in</a> to join the discussion.
-                            </p>
-                        </div>
-                    )}
 
-                    {/* Display Comments */}
-                    <div className="space-y-8">
-                        {safeComments.length > 0 ? (
-                            safeComments.map((comment) => (
-                                <div key={comment.id} className="group flex gap-4">
+                                    <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
+                                        {module.file_url && (
+                                            <>
+                                                {/* Read Online  */}
+                                                <button
+                                                    onClick={() =>
+                                                        setPdfModalOpen(true)
+                                                    }
+                                                    className="flex w-full transform items-center justify-center gap-3 rounded-full bg-amber    -600 px-6 py-3 text-base font-bold text-white shadow-lg shadow-amber-500/50 transition-all duration-300 hover:scale-[1.02] hover:bg-amber-700 sm:w-auto"
+                                                >
+                                                    <BookOpen size={20} />
+                                                    Read Online
+                                                </button>
+
+                                                {/* Download button */}
+                                                <a
+                                                    href={route('modules.read', {
+                                                        module: module.id,
+                                                    })}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    download
+                                                    className="flex w-full transform items-center justify-center gap-3 rounded-full border border-indigo-600 bg-transparent px-6 py-3 text-base font-bold text-indigo-600 transition-all duration-300 hover:scale-[1.02] hover:bg-indigo-50 sm:w-auto dark:text-indigo-400 dark:hover:bg-gray-800"
+                                                >
+                                                    <Download size={20} />
+                                                    Download
+                                                </a>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        {/* COMMENTS SECTION */}
+                        <section className="mt-12">
+                            <h2 className="mb-8 text-xl font-bold text-gray-900 dark:text-white">
+                                {safeComments.length} Comments
+                            </h2>
+
+                            {/* Comment Form */}
+                            {auth.user ? (
+                                <div className="mb-10 flex gap-4">
                                     <div className="flex-shrink-0">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-sm font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
-                                            {comment.user.name.charAt(0)}
-                                        </div>
+                                        {auth.user.name ? (
+                                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
+                                                {auth.user.name.charAt(0)}
+                                            </div>
+                                        ) : (
+                                            <UserCircle
+                                                size={40}
+                                                className="text-gray-400"
+                                            />
+                                        )}
                                     </div>
-                                    <div className="flex-grow">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                                                {comment.user.name}
-                                            </span>
-                                            <span className="text-xs text-gray-500 dark:text-gray-400">
-                                                {formatRelativeTime(comment.created_at)}
-                                            </span>
+                                    <form className="w-full" onSubmit={submit}>
+                                        <div className="relative">
+                                            <input
+                                                type="text"
+                                                value={data.body}
+                                                onChange={(e) =>
+                                                    setData('body', e.target.value)
+                                                }
+                                                className="w-full border-b border-gray-300 bg-transparent py-2 text-gray-900 placeholder-gray-500 transition-colors focus:border-indigo-600 focus:outline-none focus:ring-0 dark:border-gray-700 dark:text-white dark:focus:border-indigo-400"
+                                                placeholder="Add a comment..."
+                                                required
+                                            />
                                         </div>
-                                        <p className="mt-1 text-sm leading-relaxed text-gray-800 dark:text-gray-200">
-                                            {comment.body}
-                                        </p>
-                                    </div>
+                                        <div className={`mt-3 flex justify-end gap-2 transition-opacity duration-200 ${data.body.trim().length > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                                            <button
+                                                type="button"
+                                                onClick={() => reset('body')}
+                                                className="rounded-full px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <button
+                                                disabled={processing || data.body.trim().length === 0}
+                                                className="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:bg-gray-300 dark:disabled:bg-gray-700"
+                                            >
+                                                Comment
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
-                            ))
-                        ) : (
-                            <p className="py-8 text-center text-gray-500 dark:text-gray-400">
-                                No comments yet. Be the first to share your thoughts!
-                            </p>
-                        )}
+                            ) : (
+                                <div className="mb-10 rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center dark:border-gray-700 dark:bg-gray-900/50">
+                                    <p className="text-gray-600 dark:text-gray-400">
+                                        <a href={route('login')} className="font-semibold text-indigo-600 hover:underline dark:text-indigo-400">Log in</a> to join the discussion.
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Display Comments */}
+                            <div className="space-y-8">
+                                {safeComments.length > 0 ? (
+                                    safeComments.map((comment) => (
+                                        <div key={comment.id} className="group flex gap-4">
+                                            <div className="flex-shrink-0">
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-sm font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                                                    {comment.user.name.charAt(0)}
+                                                </div>
+                                            </div>
+                                            <div className="flex-grow">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                                                        {comment.user.name}
+                                                    </span>
+                                                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                        {formatRelativeTime(comment.created_at)}
+                                                    </span>
+                                                </div>
+                                                <p className="mt-1 text-sm leading-relaxed text-gray-800 dark:text-gray-200">
+                                                    {comment.body}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="py-8 text-center text-gray-500 dark:text-gray-400">
+                                        No comments yet. Be the first to share your thoughts!
+                                    </p>
+                                )}
+                            </div>
+                        </section>
                     </div>
-                </section>
+
+                    {/* Recent Modules Sidebar */}
+                    <aside className="lg:col-span-1">
+                        <div className="sticky top-24 rounded-xl bg-white p-6 shadow-xl dark:border dark:border-gray-800 dark:bg-gray-900 dark:shadow-none">
+                            <h3 className="mb-6 text-lg font-bold text-gray-900 dark:text-white">
+                                Recent Modules
+                            </h3>
+                            <div className="space-y-6">
+                                {recentModules && recentModules.length > 0 ? (
+                                    recentModules.map((recent) => (
+                                        <button
+                                            key={recent.id}
+                                            onClick={() => router.get(route('modules.show', recent.slug))}
+                                            className="group flex w-full items-center gap-4 text-left transition-colors"
+                                        >
+                                            <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg">
+                                                <img
+                                                    src={recent.thumbnail_url}
+                                                    alt={recent.title}
+                                                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                                />
+                                            </div>
+                                            <div className="flex-grow">
+                                                <h4 className="line-clamp-2 text-sm font-medium text-gray-900 transition-colors group-hover:text-amber-600 dark:text-gray-200 dark:group-hover:text-amber-400">
+                                                    {recent.title}
+                                                </h4>
+                                                <div className="mt-1 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                                                    <span>{recent.author_name}</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    ))
+                                ) : (
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        No recent modules found.
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </main>
         </div>
     );

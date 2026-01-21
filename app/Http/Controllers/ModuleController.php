@@ -136,6 +136,22 @@ class ModuleController extends Controller
         ->where('slug', $slug)
         ->firstOrFail();
 
+        $recentModules = Module::select('id', 'title', 'thumbnail_url', 'published_at', 'author_name', 'slug')
+            ->where('id', '!=', $module->id)
+            ->latest()
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'title' => $item->title,
+                    'slug' => $item->slug,
+                    'thumbnail_url' => $item->thumbnail_url,
+                    'author_name' => $item->author_name,
+                    'published_at' => $item->published_at,
+                ];
+            });
+
         return Inertia::render('PostDetail', [
             'module' => [
                 'id' => $module->id,
@@ -149,6 +165,7 @@ class ModuleController extends Controller
                 'comments' => $module->comments,
                 'likes_count' => $module->likes()->count(),
             ],
+            'recentModules' => $recentModules,
             'auth' => [
                 'user' => Auth::user()
             ],

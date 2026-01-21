@@ -41,7 +41,7 @@ export default function Register() {
         <div className="flex min-h-screen w-full bg-white dark:bg-black selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
             <Head title="Register | Ablex" />
 
-            {/* Left Side: Image & Branding (Desktop Only) */}
+            {/* Left Side:  */}
             <div className="hidden lg:flex relative w-1/2 flex-col justify-between p-10 text-white dark:border-r border-white/10">
                 <div className="absolute inset-0 bg-black">
                      <img 
