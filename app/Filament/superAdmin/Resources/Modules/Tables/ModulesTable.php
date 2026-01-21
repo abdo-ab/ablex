@@ -39,7 +39,7 @@
 // }
 
 
-namespace App\Filament\SuperAdmin\Resources\Modules\Tables;
+namespace App\Filament\superAdmin\Resources\Modules\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;

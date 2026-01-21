@@ -63,7 +63,7 @@
 // }
 
 
-namespace App\Filament\SuperAdmin\Resources\Modules\Schemas;
+namespace App\Filament\superAdmin\Resources\Modules\Schemas;
 
 use Filament\Forms\Components\FileUpload;
  use Filament\Forms\Components\Hidden;

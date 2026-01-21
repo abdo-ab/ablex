@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\Modules\Pages;
+namespace App\Filament\Absitemanager\Resources\Modules\Pages;
 
-use App\Filament\Resources\Modules\ModuleResource;
+use App\Filament\Absitemanager\Resources\Modules\ModuleResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

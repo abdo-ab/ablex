@@ -19,9 +19,9 @@
 // }
 
 
-namespace App\Filament\SuperAdmin\Resources\Modules\Pages;
+namespace App\Filament\superAdmin\Resources\Modules\Pages;
 
-use App\Filament\SuperAdmin\Resources\Modules\ModuleResource;
+use App\Filament\superAdmin\Resources\Modules\ModuleResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

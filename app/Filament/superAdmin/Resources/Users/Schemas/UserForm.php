@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\SuperAdmin\Resources\Users\Schemas;
+namespace App\Filament\superAdmin\Resources\Users\Schemas;
 
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;

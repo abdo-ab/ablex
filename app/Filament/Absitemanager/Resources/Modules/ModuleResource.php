@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Modules;
+namespace App\Filament\Absitemanager\Resources\Modules;
 
-use App\Filament\Resources\Modules\Pages\CreateModule;
-use App\Filament\Resources\Modules\Pages\EditModule;
-use App\Filament\Resources\Modules\Pages\ListModules;
-use App\Filament\Resources\Modules\Schemas\ModuleForm;
-use App\Filament\Resources\Modules\Tables\ModulesTable;
+use App\Filament\Absitemanager\Resources\Modules\Pages\CreateModule;
+use App\Filament\Absitemanager\Resources\Modules\Pages\EditModule;
+use App\Filament\Absitemanager\Resources\Modules\Pages\ListModules;
+use App\Filament\Absitemanager\Resources\Modules\Schemas\ModuleForm;
+use App\Filament\Absitemanager\Resources\Modules\Tables\ModulesTable;
 use App\Models\Module;
 use BackedEnum;
 use Filament\Resources\Resource;

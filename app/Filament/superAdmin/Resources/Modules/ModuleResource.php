@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\SuperAdmin\Resources\Modules;
+namespace App\Filament\superAdmin\Resources\Modules;
 
-use App\Filament\SuperAdmin\Resources\Modules\Pages\CreateModule;
-use App\Filament\SuperAdmin\Resources\Modules\Pages\EditModule;
-use App\Filament\SuperAdmin\Resources\Modules\Pages\ListModules;
-use App\Filament\SuperAdmin\Resources\Modules\Schemas\ModuleForm;
-use App\Filament\SuperAdmin\Resources\Modules\Tables\ModulesTable;
+use App\Filament\superAdmin\Resources\Modules\Pages\CreateModule;
+use App\Filament\superAdmin\Resources\Modules\Pages\EditModule;
+use App\Filament\superAdmin\Resources\Modules\Pages\ListModules;
+use App\Filament\superAdmin\Resources\Modules\Schemas\ModuleForm;
+use App\Filament\superAdmin\Resources\Modules\Tables\ModulesTable;
 use App\Models\Module;
 use BackedEnum;
 use Filament\Schemas\Schema;

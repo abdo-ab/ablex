@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\SuperAdmin\Resources\Users;
+namespace App\Filament\superAdmin\Resources\Users;
 
-use App\Filament\SuperAdmin\Resources\Users\Pages\CreateUser;
-use App\Filament\SuperAdmin\Resources\Users\Pages\EditUser;
-use App\Filament\SuperAdmin\Resources\Users\Pages\ListUsers;
-use App\Filament\SuperAdmin\Resources\Users\Schemas\UserForm;
-use App\Filament\SuperAdmin\Resources\Users\Tables\UsersTable;
+use App\Filament\superAdmin\Resources\Users\Pages\CreateUser;
+use App\Filament\superAdmin\Resources\Users\Pages\EditUser;
+use App\Filament\superAdmin\Resources\Users\Pages\ListUsers;
+use App\Filament\superAdmin\Resources\Users\Schemas\UserForm;
+use App\Filament\superAdmin\Resources\Users\Tables\UsersTable;
 use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;

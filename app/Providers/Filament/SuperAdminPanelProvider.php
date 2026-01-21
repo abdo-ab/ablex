@@ -2,8 +2,8 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\SuperAdmin\Resources\Modules\ModuleResource;
-use App\Filament\SuperAdmin\Resources\Users\UserResource;
+use App\Filament\superAdmin\Resources\Modules\ModuleResource;
+use App\Filament\superAdmin\Resources\Users\UserResource;
 use App\Filament\Widgets\TotalStatus;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;

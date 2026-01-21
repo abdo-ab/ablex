@@ -2,7 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Resources\Modules\ModuleResource;
+use App\Filament\Absitemanager\Resources\Modules\ModuleResource;
 use App\Http\Middleware\ProtectFilamentAdmin;
 use App\Models\Module;
 use Filament\Http\Middleware\Authenticate;

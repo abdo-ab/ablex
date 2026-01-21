@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Modules\Schemas;
+namespace App\Filament\Absitemanager\Resources\Modules\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
