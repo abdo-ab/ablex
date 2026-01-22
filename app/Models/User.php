@@ -18,7 +18,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'role',
+        'Role',
     ];
 
     protected $hidden = [
@@ -36,8 +36,15 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // Allow all authenticated users to access both panels
-        return true;
+         if ($panel->getId() === 'superAdmin') {
+            return $this->Role === 'superAdmin';
+        }
+
+        if ($panel->getId() === 'absitemanager') {
+            return $this->Role === 'admin';
+        }
+
+        return false;
     }
 
     public function comments()

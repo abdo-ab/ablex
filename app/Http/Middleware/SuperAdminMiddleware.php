@@ -18,7 +18,7 @@ class SuperAdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect('/dashboard')->with('forbidden ', true);
+            return redirect('/dashboard')->with('forbidden', true);
         }
         if (Auth::user()->Role !== 'superAdmin') {
             return redirect('forbidden');

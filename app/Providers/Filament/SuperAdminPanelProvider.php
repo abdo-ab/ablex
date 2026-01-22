@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\superAdmin\Resources\Modules\ModuleResource;
 use App\Filament\superAdmin\Resources\Users\UserResource;
 use App\Filament\Widgets\TotalStatus;
+use App\Http\Middleware\SuperAdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -55,6 +56,7 @@ class SuperAdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                SuperAdminMiddleware::class,
             ]);
     }
 }

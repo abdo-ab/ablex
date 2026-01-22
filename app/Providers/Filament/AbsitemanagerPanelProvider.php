@@ -52,6 +52,7 @@ class AbsitemanagerPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                ProtectFilamentAdmin::class,
             ]);
     }
 }
