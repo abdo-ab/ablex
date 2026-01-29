@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ return [
     'strict' => true,
     'engine' => null,
     'options' => extension_loaded('pdo_mysql') ? [
-        PDO::MYSQL_ATTR_SSL_CA => base_path('certs/aiven-ca.pem'),
+        PDO::MYSQL_ATTR_SSL_CA => base_path('certs/ca.pem'),
     ] : [],
 ],
 
